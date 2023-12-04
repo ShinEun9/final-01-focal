@@ -1,4 +1,4 @@
-import authInstance from '../../api/instance/authInstance';
+import { authInstance } from 'api/instance';
 
 export const createProductAPI = async (productData) => {
   try {

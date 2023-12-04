@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import Header from '../layouts/Header/Header';
-import ProductUpload from '../components/Product/ProductUpload';
-import { createProductAPI } from '../api/apis/product';
+import { Header } from 'layouts';
+import { ProductUpload } from 'components/Product';
+import { createProductAPI } from 'api/apis/product';
 
 export default function ProductUploadPage() {
   const [buttonDisable, setButtonDisable] = useState(true);

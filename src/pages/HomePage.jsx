@@ -1,17 +1,19 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import Button from '../components/Common/Button/Button';
-import Header from '../layouts/Header/Header';
-import NavBar from '../layouts/NavBar/NavBar';
-import BottomSheetModal from '../layouts/Modal/BottomSheetModal';
-import BottomSheetContent from '../layouts/Modal/BottomSheetContent';
-import ConfirmModal from '../layouts/Modal/ConfirmModal';
-import useModal from '../hooks/useModal';
-import logo from '../assets/images/logo.png';
-import Loading from '../layouts/Loading/Loading';
-import { reportPostAPI } from '../api/apis/post';
-import PostsFeed from '../components/Post/PostsFeed';
+import { Button } from 'components/Common';
+import {
+  Header,
+  NavBar,
+  BottomSheetModal,
+  BottomSheetContent,
+  ConfirmModal,
+  Loading,
+} from 'layouts';
+import { PostsFeed } from 'components/Post';
+import { useModal, useScrollToTop } from 'hooks';
+import logo from 'assets/images/logo.png';
+import { reportPostAPI } from 'api/apis/post';
 
 const ContentWrapper = styled.main`
   margin: 48px 0 0;
@@ -21,6 +23,7 @@ const ContentWrapper = styled.main`
 
 const Container = styled.section`
   display: flex;
+  background-color: pink;
   min-height: 100%;
   flex-direction: column;
   justify-content: ${({ data }) => (data.length ? 'flex-start' : 'center')};
@@ -52,20 +55,13 @@ export default function HomePage() {
     closeModal,
   } = useModal();
   const navigate = useNavigate();
-  const scrollRef = useRef(null);
+  const { scrollRef, scrollToTop } = useScrollToTop();
 
   const handleReport = async (e) => {
     e.stopPropagation();
     await reportPostAPI(postId);
     closeMenu();
     closeModal();
-  };
-
-  const scrollToTop = () => {
-    scrollRef.current.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
   };
 
   return (
@@ -75,42 +71,48 @@ export default function HomePage() {
       <ContentWrapper ref={scrollRef}>
         <h2 className="a11y-hidden">Focal 홈 피드</h2>
         <Container data={postDatas}>
-          <h3 className="a11y-hidden">내가 팔로우한 사람 글 목록</h3>
-          <PostsFeed
-            setIsLoading={setIsLoading}
-            setPostDatas={setPostDatas}
-            postDatas={postDatas}
-            openMenu={openMenu}
-            setPostId={setPostId}
-          />
-          {isMenuOpen && (
-            <BottomSheetModal setIsMenuOpen={closeMenu}>
-              <BottomSheetContent onClick={openModal}>신고</BottomSheetContent>
-            </BottomSheetModal>
-          )}
-          {isModalOpen && (
-            <ConfirmModal
-              title="게시글을 신고하시겠어요?"
-              confirmInfo="신고"
-              setIsMenuOpen={closeMenu}
-              setIsModalOpen={closeModal}
-              onClick={handleReport}
-            />
-          )}
-
-          {postDatas.length === 0 && (
+          {isLoading && (
             <>
-              <Img src={logo} alt="Focal 로고" />
-              <Info>유저를 검색해 팔로우 해보세요!</Info>
-              <Button
-                type="button"
-                className="md"
-                onClick={() => {
-                  navigate('/search');
-                }}
-              >
-                검색하기
-              </Button>
+              <h3 className="a11y-hidden">내가 팔로우한 사람 글 목록</h3>
+              <PostsFeed
+                setIsLoading={setIsLoading}
+                setPostDatas={setPostDatas}
+                postDatas={postDatas}
+                openMenu={openMenu}
+                setPostId={setPostId}
+              />
+              {isMenuOpen && (
+                <BottomSheetModal setIsMenuOpen={closeMenu}>
+                  <BottomSheetContent onClick={openModal}>
+                    신고
+                  </BottomSheetContent>
+                </BottomSheetModal>
+              )}
+              {isModalOpen && (
+                <ConfirmModal
+                  title="게시글을 신고하시겠어요?"
+                  confirmInfo="신고"
+                  setIsMenuOpen={closeMenu}
+                  setIsModalOpen={closeModal}
+                  onClick={handleReport}
+                />
+              )}
+
+              {postDatas.length === 0 && (
+                <>
+                  <Img src={logo} alt="Focal 로고" />
+                  <Info>유저를 검색해 팔로우 해보세요!</Info>
+                  <Button
+                    type="button"
+                    className="md"
+                    onClick={() => {
+                      navigate('/search');
+                    }}
+                  >
+                    검색하기
+                  </Button>
+                </>
+              )}
             </>
           )}
         </Container>

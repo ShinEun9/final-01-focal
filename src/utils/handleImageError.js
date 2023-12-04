@@ -1,5 +1,5 @@
-import defaultImage from '../assets/images/basic-profile.png';
+import defaultImage from 'assets/images/basic-profile.png';
 
-export const handleImageError = (e) => {
+export default function handleImageError(e) {
   e.target.src = defaultImage;
-};
+}

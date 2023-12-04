@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import LogoImg from '../../assets/images/logo.png';
-import Button from '../Common/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import { Button } from 'components/Common';
+import LogoImg from 'assets/images/logo.png';
 
 const NoPostsContainer = styled.section`
   width: 100%;

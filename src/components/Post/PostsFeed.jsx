@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import PostCard from '../Common/PostCard/PostCard';
-import { feedAPI } from '../../api/apis/post';
+import { PostCard } from 'components/Common';
+import { feedAPI } from 'api/apis/post';
 
 const Feed = styled.section`
   height: 100%;

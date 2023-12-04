@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import fileUploadImg from '../../../assets/images/profile-upload.png';
-import { getProperImgSrc } from '../../../utils/getProperImgSrc';
-import { handleImageError } from '../../../utils/handleImageError';
+import { getProperImgSrc, handleImageError } from 'utils';
+import fileUploadImg from 'assets/images/profile-upload.png';
 
 const StyledLabel = styled.label`
   display: block;

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import TitleHeader from '../../layouts/Header/TitleHeader';
+import { TitleHeader } from 'layouts';
 
 const Container = styled.div`
   height: 100vh;

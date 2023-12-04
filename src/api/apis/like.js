@@ -1,4 +1,4 @@
-import authInstance from '../instance/authInstance';
+import { authInstance } from 'api/instance';
 
 export const likeAPI = async (id, liked) => {
   try {

@@ -1,14 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import BasicModal from '../layouts/Modal/BasicModal';
-import useModal from '../hooks/useModal';
-import Logo from '../assets/images/logo.png';
-import emailIcon from '../assets/icons/email.svg';
-import signupIcon from '../assets/icons/icon-user-yellow.svg';
-import kakao from '../assets/icons/kakao.svg';
-import google from '../assets/icons/google.svg';
-import facebook from '../assets/icons/facebook.svg';
+import { BasicModal } from 'layouts';
+import { useModal } from 'hooks';
+import Logo from 'assets/images/logo.png';
+import emailIcon from 'assets/icons/email.svg';
+import signupIcon from 'assets/icons/icon-user-yellow.svg';
+import kakao from 'assets/icons/kakao.svg';
+import google from 'assets/icons/google.svg';
+import facebook from 'assets/icons/facebook.svg';
 
 const Container = styled.div`
   overflow-y: scroll;

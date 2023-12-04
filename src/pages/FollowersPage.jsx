@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import UserFollowListItem from '../components/Follow/UserFollowListItem';
-import Header from '../layouts/Header/Header';
-import Loading from '../layouts/Loading/Loading';
-import { followerAPI } from '../api/apis/follow';
-import FollowNone from '../components/Follow/FollowNone';
+import React, { useEffect, useState, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useRef } from 'react';
-import useScrollBottom from '../hooks/useScrollBottom';
+import styled from 'styled-components';
+import { Header, Loading } from 'layouts';
+import { FollowNone, UserFollowListItem } from 'components/Follow';
+import { useScrollBottom } from 'hooks';
+import { followerAPI } from 'api/apis/follow';
 
 const Main = styled.main`
   width: 100%;

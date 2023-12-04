@@ -3,4 +3,4 @@ const alertMessage = {
   imgMaximumLengthErr: '파일 최대 가능 업로드 갯수는 3개입니다',
 };
 
-export { alertMessage };
+export default alertMessage;

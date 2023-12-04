@@ -37,7 +37,7 @@ const RadioInputBox = styled.div`
   }
 `;
 
-export default function RadioInput({
+function RadioInput({
   id,
   children,
   error = '',
@@ -79,7 +79,7 @@ const RadioInputGroupBox = styled.div`
   }
 `;
 
-export function RadioInputGroup({ title, children }) {
+function RadioInputGroup({ title, children }) {
   return (
     <RadioInputGroupBox>
       <p className="title">{title}</p>
@@ -87,3 +87,5 @@ export function RadioInputGroup({ title, children }) {
     </RadioInputGroupBox>
   );
 }
+
+export { RadioInput, RadioInputGroup };

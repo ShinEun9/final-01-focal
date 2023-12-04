@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import Button from '../Common/Button/Button';
-import { ReactComponent as ShareIcon } from '../../assets/icons/icon-share.svg';
-import { ReactComponent as ChatIcon } from '../../assets/icons/icon-message.svg';
-import { followAPI, unfollowAPI } from '../../api/apis/follow';
+import { Button } from 'components/Common';
+import { ReactComponent as ShareIcon } from 'assets/icons/icon-share.svg';
+import { ReactComponent as ChatIcon } from 'assets/icons/icon-message.svg';
+import { followAPI, unfollowAPI } from 'api/apis/follow';
 
 const BtnRow = styled.div`
   display: flex;

@@ -7,8 +7,10 @@ const localStorageEffect = ({ setSelf }) => {
   }
 };
 
-export const loginState = atom({
+const loginState = atom({
   key: 'loginState',
   default: false,
   effects: [localStorageEffect],
 });
+
+export default loginState;

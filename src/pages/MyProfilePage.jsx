@@ -1,20 +1,19 @@
-import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
-import { loginState } from '../states/LoginState';
-import Header from '../layouts/Header/Header';
-import ProfileInfo from '../components/Profile/ProfileInfo';
-import ProfileProducts from '../components/Profile/ProfileProducts';
-import ProfilePosts from '../components/Profile/ProfilePosts';
-import NavBar from '../layouts/NavBar/NavBar';
-import BottomSheetModal from '../layouts/Modal/BottomSheetModal';
-import BottomSheetContent from '../layouts/Modal/BottomSheetContent';
-import ConfirmModal from '../layouts/Modal/ConfirmModal';
-import useModal from '../hooks/useModal';
-import Loading from '../layouts/Loading/Loading';
-import { getMyInfoAPI } from '../api/apis/user';
-import { useRef } from 'react';
+import styled from 'styled-components';
+import { loginState } from 'states';
+import {
+  Header,
+  NavBar,
+  Loading,
+  BottomSheetModal,
+  ConfirmModal,
+  BottomSheetContent,
+} from 'layouts';
+import { ProfileInfo, ProfileProducts, ProfilePosts } from 'components/Profile';
+import { useModal } from 'hooks';
+import { getMyInfoAPI } from 'api/apis/user';
 
 const Main = styled.main`
   width: 100%;

@@ -1,8 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { getProperImgSrc } from '../../../utils/getProperImgSrc';
-import { handleImageError } from '../../../utils/handleImageError';
+import { getProperImgSrc, handleImageError } from 'utils';
 
 const StyledUserInfo = styled(Link)`
   flex-grow: 1;

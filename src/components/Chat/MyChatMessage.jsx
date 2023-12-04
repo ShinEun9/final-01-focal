@@ -15,7 +15,7 @@ const ChatDateStyle = styled.strong`
   padding-right: 7px;
 `;
 
-function MyChatMessage({ time, children }) {
+export default function MyChatMessage({ time, children }) {
   return (
     <MyChatLogStyle>
       <ChatDateStyle>{time}</ChatDateStyle>
@@ -23,5 +23,3 @@ function MyChatMessage({ time, children }) {
     </MyChatLogStyle>
   );
 }
-
-export default MyChatMessage;

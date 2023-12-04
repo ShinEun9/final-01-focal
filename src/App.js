@@ -1,6 +1,6 @@
 import { RecoilRoot } from 'recoil';
 import { GlobalStyle } from './Globalstyled';
-import Router from './routes/Router';
+import { Router } from 'routes';
 
 function App() {
   return (

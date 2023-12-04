@@ -1,13 +1,10 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import delteBtn from '../../assets/icons/delete.svg';
-import postImgUploadBtn from '../../assets/images/image-upload.png';
-import { getMultiImageSrcAPI } from '../../api/apis/image';
-import useHandleResizeHeight from '../../hooks/useHandleResizeHeight';
-import { alertMessage } from '../../constants/alertMessage';
-import { getProperImgSrc } from '../../utils/getProperImgSrc';
-import { handleImageError } from '../../utils/handleImageError';
-
+import { useHandleResizeHeight } from 'hooks';
+import { getMultiImageSrcAPI } from 'api/apis/image';
+import { getProperImgSrc, handleImageError, alertMessage } from 'utils';
+import delteBtn from 'assets/icons/delete.svg';
+import postImgUploadBtn from 'assets/images/image-upload.png';
 
 const UserImageStyle = styled.img`
   width: 42px;
@@ -76,7 +73,7 @@ const userImgSrc = () => {
   return localStorage.getItem('image');
 };
 
-function PostUpload({
+export default function PostUpload({
   inputValue,
   setInputValue,
   setBtnDisabled,
@@ -177,5 +174,3 @@ function PostUpload({
     </>
   );
 }
-
-export default PostUpload;

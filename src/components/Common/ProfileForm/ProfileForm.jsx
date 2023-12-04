@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import Button from '../Button/Button';
-import TextInput from '../Input/TextInput';
-import ProfileImageUploader from '../Input/ProfileImageUploader';
-import { accountnameValidAPI } from '../../../api/apis/user';
-import { accountnameRegex, validateMessage } from '../../../constants/validate';
-import { useDebounce } from '../../../hooks/useDebounce';
+import { Button, TextInput, ProfileImageUploader } from 'components/Common';
+import { accountnameRegex, validateMessage } from 'utils/';
+import { accountnameValidAPI } from 'api/apis/user';
+import { useDebounce } from 'hooks';
 
 const Form = styled.form`
   & > div:not(:last-child) {

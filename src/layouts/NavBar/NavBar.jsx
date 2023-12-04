@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import NavBarItem from './NavBarItem';
-import { ReactComponent as HomeIcon } from '../../assets/icons/icon-home.svg';
-import { ReactComponent as ChatIcon } from '../../assets/icons/icon-message.svg';
-import { ReactComponent as PostIcon } from '../../assets/icons/icon-edit.svg';
-import { ReactComponent as ProfileIcon } from '../../assets/icons/icon-user.svg';
+import { ReactComponent as HomeIcon } from 'assets/icons/icon-home.svg';
+import { ReactComponent as ChatIcon } from 'assets/icons/icon-message.svg';
+import { ReactComponent as PostIcon } from 'assets/icons/icon-edit.svg';
+import { ReactComponent as ProfileIcon } from 'assets/icons/icon-user.svg';
 import { useRecoilState } from 'recoil';
-import { pathState } from '../../states/PathState';
+import { pathState } from 'states';
 
 const StyledNav = styled.nav`
   position: fixed;

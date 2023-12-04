@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Header from '../layouts/Header/Header';
-import PostUpload from '../components/Post/PostUpload';
+import { Header } from 'layouts';
+import { PostUpload } from 'components/Post';
 import { useNavigate } from 'react-router-dom';
-import { createPostAPI } from '../api/apis/post';
-import { alertMessage } from '../constants/alertMessage';
+import { createPostAPI } from 'api/apis/post';
+import { alertMessage } from 'utils';
 
 const PostMainStyle = styled.main`
   margin-top: 48px;

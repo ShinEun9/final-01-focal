@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import ImageSrc from '../../assets/images/image-upload.png';
+import ImageSrc from 'assets/images/image-upload.png';
 
 const ImageContainerStyle = styled.div`
   margin-bottom: 30px;
@@ -44,7 +44,7 @@ const ImageInputStyle = styled.input`
   display: none;
 `;
 
-function ImageUpload({ title, onImageChange, imagePreview }) {
+export default function ImageUpload({ title, onImageChange, imagePreview }) {
   return (
     <ImageContainerStyle>
       <ImageTitleStyle>{title}</ImageTitleStyle>
@@ -60,5 +60,3 @@ function ImageUpload({ title, onImageChange, imagePreview }) {
     </ImageContainerStyle>
   );
 }
-
-export default ImageUpload;

@@ -1,4 +1,4 @@
-import baseInstance from '../instance/baseInstance';
+import { baseInstance } from 'api/instance';
 
 export const getImageSrcAPI = async (file) => {
   const formData = new FormData();

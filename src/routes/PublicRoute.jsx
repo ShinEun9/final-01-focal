@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { loginState } from '../states/LoginState';
+import { loginState } from 'states';
 
 // 인증을 안했을 경우 해당 페이지로, 인증을 한 상태일 경우 homePage로
 export default function PublicRoute() {

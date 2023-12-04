@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import ChatItem from './ChatItem';
-import { getDate } from '../../utils/getDate';
+import { getDate } from 'utils';
 
 const ListMainStyle = styled.main`
   margin-top: 48px;
@@ -19,7 +19,7 @@ const MessagesListStyle = styled.ul`
   max-width: 390px;
 `;
 
-function ChatList({ list }) {
+export default function ChatList({ list }) {
   return (
     <ListMainStyle>
       <h2 className="a11y-hidden">채팅 목록</h2>
@@ -39,5 +39,3 @@ function ChatList({ list }) {
     </ListMainStyle>
   );
 }
-
-export default ChatList;

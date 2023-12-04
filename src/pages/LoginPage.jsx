@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import LoginForm from '../components/Login/LoginForm';
-import BasicLayout from '../layouts/Layout/BasicLayout';
+import { BasicLayout } from 'layouts';
+import { LoginForm } from 'components/Login';
 
 export default function LoginPage() {
   return (

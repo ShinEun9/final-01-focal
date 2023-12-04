@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import Button from '../Common/Button/Button';
+import { Button } from 'components/Common';
 
 const BtnRow = styled.div`
   display: flex;

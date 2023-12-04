@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import UserInfo from '../Common/UserInfo/UserInfo';
+import { UserInfo } from 'components/Common';
 
 const StyledLi = styled.li`
   display: flex;
