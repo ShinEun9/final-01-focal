@@ -1,13 +1,15 @@
 import styled from 'styled-components';
-import ChatMessage from './ChatMessage';
-import MyChatMessage from './MyChatMessage';
-import SendText from './SendText';
-import SendImage from './SendImage';
-import ReceiveText from './ReceiveText';
-import ReceiveImage from './ReceiveImage';
-import ImageSrc from '../../assets/images/basic-profile.png';
-import ImageSrc2 from '../../assets/images/chat-exapmle.png';
-import ImageSrc3 from '../../assets/images/post-img-example.png';
+import {
+  ChatMessage,
+  MyChatMessage,
+  SendText,
+  ReceiveText,
+  ReceiveImage,
+  SendImage,
+} from 'components/Chat';
+import ImageSrc from 'assets/images/basic-profile.png';
+import ImageSrc2 from 'assets/images/chat-exapmle.png';
+import ImageSrc3 from 'assets/images/post-img-example.png';
 
 const MainStyle = styled.main`
   background-color: #f2f2f2;

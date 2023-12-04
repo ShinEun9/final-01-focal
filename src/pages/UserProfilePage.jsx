@@ -1,14 +1,9 @@
-import styled from 'styled-components';
-import { useState, useEffect } from 'react';
-import { profileAPI } from '../api/apis/profile';
-import Header from '../layouts/Header/Header';
-import ProfileInfo from '../components/Profile/ProfileInfo';
-import ProfileProducts from '../components/Profile/ProfileProducts';
-import ProfilePosts from '../components/Profile/ProfilePosts';
-import NavBar from '../layouts/NavBar/NavBar';
-import Loading from '../layouts/Loading/Loading';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { useRef } from 'react';
+import styled from 'styled-components';
+import { Header, NavBar, Loading } from 'layouts';
+import { ProfileInfo, ProfileProducts, ProfilePosts } from 'components/Profile';
+import { profileAPI } from 'api/apis/profile';
 
 const Main = styled.main`
   width: 100%;

@@ -1,15 +1,11 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Btn from '../../assets/icons/icon-more.svg';
-import BottomSheetModal from '../../layouts/Modal/BottomSheetModal';
-import BottomSheetContent from '../../layouts/Modal/BottomSheetContent';
-import ConfirmModal from '../../layouts/Modal/ConfirmModal';
-import useModal from '../../hooks/useModal';
-import { convertTime } from '../../utils/convertTime';
-import { deleteCommentAPI, reportCommentAPI } from '../../api/apis/comment';
-import { getProperImgSrc } from '../../utils/getProperImgSrc';
-import { handleImageError } from '../../utils/handleImageError';
+import moreBtn from 'assets/icons/icon-more.svg';
+import { ConfirmModal, BottomSheetContent, BottomSheetModal } from 'layouts';
+import { useModal } from 'hooks';
+import { deleteCommentAPI, reportCommentAPI } from 'api/apis/comment';
+import { convertTime, getProperImgSrc, handleImageError } from 'utils';
 
 const CommentSection = styled.section`
   max-width: 390px;
@@ -76,13 +72,13 @@ const MoreBtn = styled.button`
   right: 0;
   width: 20px;
   height: 20px;
-  background-image: url(${Btn});
+  background-image: url(${moreBtn});
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
 `;
 
-function PostComment({ comments, postId, onDelete }) {
+export default function PostComment({ comments, postId, onDelete }) {
   const {
     isMenuOpen,
     isModalOpen,
@@ -179,5 +175,3 @@ function PostComment({ comments, postId, onDelete }) {
     </CommentSection>
   );
 }
-
-export default PostComment;

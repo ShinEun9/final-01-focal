@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-import TextInput from '../Common/Input/TextInput';
-import Button from '../Common/Button/Button';
 import { useSetRecoilState } from 'recoil';
-import { loginState } from '../../states/LoginState';
-import { loginAPI } from '../../api/apis/user';
+import { loginState } from 'states';
+import styled from 'styled-components';
+import { Button, TextInput } from 'components/Common';
+import { loginAPI } from 'api/apis/user';
 
 const Form = styled.form`
   margin-bottom: 20px;

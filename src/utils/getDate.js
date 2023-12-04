@@ -1,4 +1,4 @@
-export const getDate = (time) => {
+export default function getDate(time) {
   if (!time) {
     time = new Date();
   }
@@ -8,4 +8,4 @@ export const getDate = (time) => {
   const date = String(time.getDate()).padStart(2, '0');
 
   return `${year}년 ${month}월 ${date}일`;
-};
+}

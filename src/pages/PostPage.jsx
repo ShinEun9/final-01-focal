@@ -1,18 +1,19 @@
 import { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import Header from '../layouts/Header/Header';
-import PostCard from '../components/Common/PostCard/PostCard';
-import PostComment from '../components/Post/PostComment';
-import TextInputBox from '../components/Common/Input/TextInputBox';
-import BottomSheetModal from '../layouts/Modal/BottomSheetModal';
-import BottomSheetContent from '../layouts/Modal/BottomSheetContent';
-import ConfirmModal from '../layouts//Modal/ConfirmModal';
-import useModal from '../hooks/useModal';
-import { deletePostAPI, reportPostAPI } from '../api/apis/post';
-import { postDetailAPI } from '../api/apis/post';
-import { getCommentListAPI, createPostCommentAPI } from '../api/apis/comment';
 import { useInView } from 'react-intersection-observer';
+import styled from 'styled-components';
+import {
+  Header,
+  BottomSheetModal,
+  BottomSheetContent,
+  ConfirmModal,
+} from 'layouts';
+import { PostCard, TextInputBox } from 'components/Common';
+import { PostComment } from 'components/Post';
+
+import { useModal } from 'hooks';
+import { deletePostAPI, reportPostAPI, postDetailAPI } from 'api/apis/post';
+import { getCommentListAPI, createPostCommentAPI } from 'api/apis/comment';
 
 const Main = styled.main`
   margin-top: 48px;

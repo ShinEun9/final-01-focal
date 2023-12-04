@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import Header from '../layouts/Header/Header';
-import ChatList from '../components/Chat/ChatList';
-import NavBar from '../layouts/NavBar/NavBar';
-import { followingAPI } from '../api/apis/follow';
+import { Header, NavBar } from 'layouts';
+import { ChatList } from 'components/Chat';
+import { followingAPI } from 'api/apis/follow';
 
 export default function ChatListPage() {
   const [isLoading, setIsLoading] = useState(false);

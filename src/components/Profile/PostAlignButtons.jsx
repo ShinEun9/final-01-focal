@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { ReactComponent as PostGalleryIcon } from '../../assets/icons/icon-post-album.svg';
-import { ReactComponent as PostListIcon } from '../../assets/icons/icon-post-list.svg';
+import { ReactComponent as PostGalleryIcon } from 'assets/icons/icon-post-album.svg';
+import { ReactComponent as PostListIcon } from 'assets/icons/icon-post-list.svg';
 
 const PostsAlignRow = styled.div`
   display: flex;

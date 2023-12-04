@@ -1,13 +1,12 @@
 import React, { useMemo, useState } from 'react';
-import styled from 'styled-components';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import UserInfo from '../UserInfo/UserInfo';
-import IconButton from '../Button/IconButton';
-import { likeAPI } from '../../../api/apis/like';
-import { ReactComponent as HeartIcon } from '../../../assets/icons/icon-heart.svg';
-import { ReactComponent as CommentIcon } from '../../../assets/icons/icon-message-small.svg';
-import { ReactComponent as MoreIcon } from '../../../assets/icons/icon-more-small.svg';
-import { convertTime } from '../../../utils/convertTime';
+import styled from 'styled-components';
+import { UserInfo, IconButton } from 'components/Common';
+import { ReactComponent as HeartIcon } from 'assets/icons/icon-heart.svg';
+import { ReactComponent as CommentIcon } from 'assets/icons/icon-message-small.svg';
+import { ReactComponent as MoreIcon } from 'assets/icons/icon-more-small.svg';
+import { convertTime } from 'utils';
+import { likeAPI } from 'api/apis/like';
 
 const PostArticle = styled.article`
   position: relative;

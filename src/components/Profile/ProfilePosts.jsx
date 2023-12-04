@@ -1,17 +1,16 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import PostCard from '../Common/PostCard/PostCard';
-import PostGalleryItem from './PostGalleryItem';
-import BottomSheetModal from '../../layouts/Modal/BottomSheetModal';
-import BottomSheetContent from '../../layouts/Modal/BottomSheetContent';
-import ConfirmModal from '../../layouts/Modal/ConfirmModal';
-import useModal from '../../hooks/useModal';
-import { deletePostAPI, reportPostAPI } from '../../api/apis/post';
-import { userpostAPI } from '../../api/apis/post';
-import PostNone from './PostNone';
-import PostAlignButtons from './PostAlignButtons';
-import useScrollBottom from '../../hooks/useScrollBottom';
+import { PostCard } from 'components/Common';
+import { BottomSheetModal, BottomSheetContent, ConfirmModal } from 'layouts';
+import {
+  PostGalleryItem,
+  PostNone,
+  PostAlignButtons,
+} from 'components/Profile';
+
+import { deletePostAPI, reportPostAPI, userpostAPI } from 'api/apis/post';
+import { useModal, useScrollBottom } from 'hooks';
 
 const PostsContainer = styled.section`
   display: flex;

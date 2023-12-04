@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import UserInfoBtns from './UserInfoBtns';
-import MyInfoBtns from './MyInfoBtns';
-import { getProperImgSrc } from '../../utils/getProperImgSrc';
-import { handleImageError } from '../../utils/handleImageError';
+import { MyInfoBtns, UserInfoBtns } from 'components/Profile';
+import { getProperImgSrc, handleImageError } from 'utils';
 
 const UserCol = styled.section`
   display: flex;

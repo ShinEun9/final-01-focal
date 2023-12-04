@@ -1,7 +1,7 @@
 import styled from 'styled-components';
-import Button from '../Common/Button/Button';
-import logoImg from '../../assets/images/logo.png';
 import { useNavigate } from 'react-router-dom';
+import { Button } from 'components/Common';
+import logoImg from 'assets/images/logo.png';
 
 const FollowNoneWrapper = styled.section`
   display: flex;

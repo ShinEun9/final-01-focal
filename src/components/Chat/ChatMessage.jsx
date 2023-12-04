@@ -21,7 +21,7 @@ const ChatDateStyle = styled.strong`
   padding: 7px 7px 0px 7px;
 `;
 
-function ChatMessage({ imgSrc, time, children }) {
+export default function ChatMessage({ imgSrc, time, children }) {
   return (
     <>
       <ChatLogStyle>
@@ -32,5 +32,3 @@ function ChatMessage({ imgSrc, time, children }) {
     </>
   );
 }
-
-export default ChatMessage;

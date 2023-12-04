@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components';
-import mainLogo from '../assets/images/main-logo.png';
+import mainLogo from 'assets/images/main-logo.png';
 
 const boxFade = keyframes`
   0% {

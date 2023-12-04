@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import BasicLayout from '../layouts/Layout/BasicLayout';
-import SignUpForm from '../components/SignUp/SignUpForm';
-import ProfileForm from '../components/Common/ProfileForm/ProfileForm';
-import { getImageSrcAPI } from '../api/apis/image';
-import { signupAPI } from '../api/apis/user';
-import useModal from '../hooks/useModal';
-import BasicModal from '../layouts/Modal/BasicModal';
+import { BasicLayout, BasicModal } from 'layouts';
+import { SignUpForm } from 'components/SignUp';
+import { ProfileForm } from 'components/Common';
+import { getImageSrcAPI } from 'api/apis/image';
+import { signupAPI } from 'api/apis/user';
+import { useModal } from 'hooks';
 
 const initialValue = {
   email: '',

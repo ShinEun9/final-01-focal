@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export function useDebounce(value, delay = 500) {
+export default function useDebounce(value, delay = 500) {
   const [debouncedValue, setDebouncedValue] = useState('');
   const timerRef = useRef();
 
@@ -16,5 +16,3 @@ export function useDebounce(value, delay = 500) {
 
   return debouncedValue;
 }
-
-// https://www.telerik.com/blogs/how-to-create-custom-debounce-hook-react

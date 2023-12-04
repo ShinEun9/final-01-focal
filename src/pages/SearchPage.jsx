@@ -1,11 +1,9 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Header from '../layouts/Header/Header';
-import UserSearchListItem from '../components/Search/UserSearchListItem';
-import NavBar from '../layouts/NavBar/NavBar';
-import { searchUserAPI } from '../api/apis/user';
-import { useDebounce } from '../hooks/useDebounce';
-import Loading from '../layouts/Loading/Loading';
+import { Header, Loading, NavBar } from 'layouts';
+import { UserSearchListItem } from 'components/Search';
+import { useDebounce } from 'hooks';
+import { searchUserAPI } from 'api/apis/user';
 
 const Main = styled.main`
   width: 100%;

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import Header from '../layouts/Header/Header';
-import PostUpload from '../components/Post/PostUpload';
 import { useNavigate, useParams } from 'react-router-dom';
-import { editPostAPI } from '../api/apis/post';
-import { postDetailAPI } from '../api/apis/post';
-import { alertMessage } from '../constants/alertMessage';
+import styled from 'styled-components';
+import { Header } from 'layouts';
+import { PostUpload } from 'components/Post';
+import { editPostAPI, postDetailAPI } from 'api/apis/post';
+import { alertMessage } from 'utils';
 
 const PostMainStyle = styled.main`
   margin-top: 48px;

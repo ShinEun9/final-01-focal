@@ -1,5 +1,4 @@
-import authInstance from '../instance/authInstance';
-import baseInstance from '../instance/baseInstance';
+import { authInstance, baseInstance } from 'api/instance';
 
 export const loginAPI = async (inputValue) => {
   try {

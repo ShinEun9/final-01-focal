@@ -1,6 +1,8 @@
 import { atom } from 'recoil';
 
-export const pathState = atom({
+const pathState = atom({
   key: 'pathState',
   default: '/',
 });
+
+export default pathState;

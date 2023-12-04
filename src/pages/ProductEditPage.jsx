@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import Header from '../layouts/Header/Header';
-import ProductUpload from '../components/Product/ProductUpload';
-import { getProductDetailAPI, editProductAPI } from '../api/apis/product';
+import { Header } from 'layouts';
+import { ProductUpload } from 'components/Product';
+import { getProductDetailAPI, editProductAPI } from 'api/apis/product';
 
 export default function ProductEditPage() {
   const { product_id } = useParams();

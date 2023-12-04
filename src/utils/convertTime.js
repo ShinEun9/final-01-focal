@@ -1,4 +1,4 @@
-export const convertTime = (date) => {
+export default function convertTime(date) {
   const currentTime = new Date();
   const commentDate = new Date(date);
   let timeDifference = currentTime - commentDate;
@@ -29,4 +29,4 @@ export const convertTime = (date) => {
   } else {
     return `${years}년 전`;
   }
-};
+}

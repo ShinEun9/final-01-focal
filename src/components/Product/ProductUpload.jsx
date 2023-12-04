@@ -1,10 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import ImageUpload from './ImageUpload';
-import TextInput from '../Common/Input/TextInput';
-import RadioInput, { RadioInputGroup } from '../Common/Input/RadioInput';
-import { getImageSrcAPI } from '../../api/apis/image';
+import { ImageUpload } from 'components/Product';
+import { TextInput, RadioInput, RadioInputGroup } from 'components/Common';
+import { getImageSrcAPI } from 'api/apis/image';
 
 const ProductMainStyle = styled.main`
   margin-top: 48px;
@@ -32,7 +31,7 @@ const ProductFormStyle = styled.form`
   }
 `;
 
-function ProductUpload({
+export default function ProductUpload({
   onValidChange,
   handleSubmit,
   handleEditSubmit,
@@ -200,5 +199,3 @@ function ProductUpload({
     </ProductMainStyle>
   );
 }
-
-export default ProductUpload;

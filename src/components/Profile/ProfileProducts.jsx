@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ProductItem from './ProductItem';
-import ProductCard from '../Product/ProductCard';
-import ConfirmModal from '../../layouts/Modal/ConfirmModal';
-import useModal from '../../hooks/useModal';
-import { getProductListAPI, deleteProductAPI } from '../../api/apis/product';
+import { ProductItem, ProductCard } from 'components/Profile';
+import { ConfirmModal } from 'layouts/';
+import { useModal } from 'hooks';
+import { getProductListAPI, deleteProductAPI } from 'api/apis/product';
 
 const ProductsCol = styled.section`
   display: flex;
