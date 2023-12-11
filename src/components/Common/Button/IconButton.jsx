@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Icon = styled.button`
+const StyledIconButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,6 +10,6 @@ const Icon = styled.button`
   padding: 0;
 `;
 
-export default function IconButton({ children }) {
-  return <Icon>{children}</Icon>;
+export default function IconButton({ children, onClick }) {
+  return <StyledIconButton onClick={onClick}>{children}</StyledIconButton>;
 }
