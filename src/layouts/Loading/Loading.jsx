@@ -10,13 +10,6 @@ const spin = keyframes`
   }
 `;
 
-const Container = styled.section`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-`;
-
 const LoadingSpinner = styled.div`
   width: 50px;
   height: 50px;
@@ -27,9 +20,5 @@ const LoadingSpinner = styled.div`
 `;
 
 export default function Loading() {
-  return (
-    <Container>
-      <LoadingSpinner />
-    </Container>
-  );
+  return <LoadingSpinner />;
 }
