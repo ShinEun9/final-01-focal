@@ -1,92 +1,101 @@
-import React, { useEffect, useRef, useState } from 'react';
-import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
+import { NoFeed } from '.';
 import { PostCard } from 'components/Common';
-import { feedAPI } from 'api/apis/post';
+import {
+  BottomSheetContent,
+  BottomSheetModal,
+  ConfirmModal,
+  Loading,
+} from 'layouts';
+import { useModal } from 'hooks';
+import { feedAPI, reportPostAPI } from 'api/apis/post';
 
-const Feed = styled.section`
-  height: 100%;
+export default function PostsFeed({ postData, setPostData }) {
+  // * 무한스크롤
 
-  & > article {
-    padding-bottom: 40px;
-  }
-`;
+  const [page, setPage] = useState(0);
+  const [isLast, setIsLast] = useState(false);
+  const LIMIT = 5;
 
-const Target = styled.div`
-  height: 1px;
-`;
+  const getPosts = async () => {
+    try {
+      const newPosts = await feedAPI(LIMIT, page * LIMIT);
 
-export default function PostsFeed({
-  setIsLoading,
-  setPostDatas,
-  postDatas,
-  openMenu,
-  setPostId,
-}) {
-  const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const [page, setPage] = useState(1);
-  const [isLastPage, setIsLastPage] = useState(false);
-  const contentRef = useRef(null);
-  const LIMIT = 10;
+      setPostData((prev) => ({
+        ...prev,
+        posts: [...prev.posts, ...newPosts],
+      }));
+
+      setIsLast(newPosts.length < LIMIT);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setPostData((prev) => ({ ...prev, isLoading: false }));
+    }
+  };
 
   useEffect(() => {
-    const getInitialPosts = async () => {
-      const posts = await feedAPI(LIMIT, 0);
-      setPostDatas(posts);
-      setIsLoading(false);
+    !isLast && getPosts();
+  }, [page]);
+
+  useEffect(() => {
+    return () => {
+      setPostData({ isLoading: true, posts: [] });
+      setPage(0);
+      setIsLast(false);
     };
-    getInitialPosts();
   }, []);
 
-  const getMorePosts = async () => {
-    if (isLoadingMore) return;
-    setIsLoadingMore(true);
-    const newPosts = await feedAPI(LIMIT, page * LIMIT);
-    setIsLoadingMore(false);
-    setPostDatas((prevPosts) => [...prevPosts, ...newPosts]);
+  // * 모달 관련
+  const [postId, setPostId] = useState();
+  const {
+    isMenuOpen,
+    isModalOpen,
+    openMenu,
+    closeMenu,
+    openModal,
+    closeModal,
+  } = useModal();
 
-    if (newPosts.length < LIMIT) {
-      setIsLastPage(true);
-      return;
-    }
-    if (newPosts.length === LIMIT) {
-      setPage((prevPage) => prevPage + 1);
-    }
+  const handleReport = async (e) => {
+    e.stopPropagation();
+    await reportPostAPI(postId);
+    closeMenu();
+    closeModal();
   };
 
-  const handleIntersection = (entries) => {
-    if (
-      entries[0].isIntersecting &&
-      entries[0].intersectionRatio > 0 &&
-      !isLastPage
-    ) {
-      getMorePosts();
-    }
-  };
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(handleIntersection, {
-      threshold: 0.5,
-    });
-    if (contentRef.current && !isLoadingMore) {
-      observer.observe(contentRef.current);
-    }
-    return () => {
-      observer.disconnect();
-    };
-  }, [contentRef.current, isLoadingMore]);
+  if (postData.isLoading) {
+    return <Loading />;
+  }
 
   return (
-    <Feed>
-      {postDatas.length > 0 &&
-        postDatas.map((data) => (
-          <PostCard
-            key={data.id}
-            post={data}
-            setIsMenuOpen={openMenu}
-            setPostId={setPostId}
-          />
-        ))}
-      <Target ref={contentRef}></Target>
-    </Feed>
+    <>
+      {postData.posts.map((item, index) => (
+        <PostCard
+          key={item.id}
+          post={item}
+          setIsMenuOpen={openMenu}
+          setPostId={setPostId}
+          isLastItem={postData.posts.length - 1 === index}
+          onFetchMoreData={() => setPage((prev) => prev + 1)}
+        />
+      ))}
+
+      {postData.posts.length === 0 && <NoFeed />}
+      {isMenuOpen && (
+        <BottomSheetModal setIsMenuOpen={closeMenu}>
+          <BottomSheetContent onClick={openModal}>신고</BottomSheetContent>
+        </BottomSheetModal>
+      )}
+      {isModalOpen && (
+        <ConfirmModal
+          title="게시글을 신고하시겠어요?"
+          confirmInfo="신고"
+          setIsMenuOpen={closeMenu}
+          setIsModalOpen={closeModal}
+          onClick={handleReport}
+        />
+      )}
+    </>
   );
 }
