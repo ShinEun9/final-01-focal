@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import useIntersectionObserver from 'hooks/useIntersectionObserver';
 import styled from 'styled-components';
 import { UserInfo, ImageCarousel, MoreButton } from 'components/Common';
 import { ReactComponent as HeartIcon } from 'assets/icons/icon-heart.svg';
@@ -55,12 +56,6 @@ const ContentInfoSection = styled.section`
   justify-content: space-between;
   align-items: center;
 
-  div {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-  }
-
   time {
     font-size: 10px;
     color: var(--sub-text-color);
@@ -86,7 +81,21 @@ const StyledHeartIcon = styled(HeartIcon)`
   fill: ${({ $liked }) => ($liked ? 'var(--main-color)' : 'transparent')};
 `;
 
-export default function PostCard({ post, setPostId, setIsMenuOpen }) {
+export default function PostCard({
+  post,
+  setPostId,
+  setIsMenuOpen,
+  isLastItem,
+  onFetchMoreData,
+}) {
+  const ref = useRef(null);
+  const entry = useIntersectionObserver(ref, {});
+  const isIntersecting = !!entry?.isIntersecting;
+
+  useEffect(() => {
+    isLastItem && isIntersecting && onFetchMoreData();
+  }, [isLastItem, isIntersecting]);
+
   const navigate = useNavigate();
   const isInProfile = useMemo(
     () => location.pathname.includes('profile'),
@@ -124,7 +133,7 @@ export default function PostCard({ post, setPostId, setIsMenuOpen }) {
   };
 
   return (
-    <PostArticle isInProfile={isInProfile}>
+    <PostArticle isInProfile={isInProfile} ref={ref}>
       <h3 className="a11y-hidden">포스트</h3>
 
       {!isInProfile && <UserInfo user={author} />}
