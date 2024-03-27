@@ -12,7 +12,6 @@ import { feedAPI, reportPostAPI } from 'api/apis/post';
 
 export default function PostsFeed({ postData, setPostData }) {
   // * 무한스크롤
-
   const [page, setPage] = useState(0);
   const [isLast, setIsLast] = useState(false);
   const LIMIT = 5;
@@ -67,6 +66,9 @@ export default function PostsFeed({ postData, setPostData }) {
   if (postData.isLoading) {
     return <Loading />;
   }
+  if (postData.posts.length === 0) {
+    return <NoFeed />;
+  }
 
   return (
     <>
@@ -81,7 +83,6 @@ export default function PostsFeed({ postData, setPostData }) {
         />
       ))}
 
-      {postData.posts.length === 0 && <NoFeed />}
       {isMenuOpen && (
         <BottomSheetModal setIsMenuOpen={closeMenu}>
           <BottomSheetContent onClick={openModal}>신고</BottomSheetContent>

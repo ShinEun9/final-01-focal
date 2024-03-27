@@ -80,7 +80,7 @@ export default function ProductCard({
   handleDelete,
   handleUpdate,
   setIsMenuOpen,
-  isCurrentUser,
+  isUserIsSameWithLoginUser,
 }) {
   const {
     itemImage,
@@ -105,7 +105,7 @@ export default function ProductCard({
         </ProductInfo>
         <ProductPrice>{price.toLocaleString()}원</ProductPrice>
 
-        {isCurrentUser ? (
+        {isUserIsSameWithLoginUser ? (
           <ButtonGroup>
             <Button onClick={handleDelete}>삭제</Button>
             <Button onClick={handleUpdate}>수정</Button>

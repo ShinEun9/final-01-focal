@@ -81,7 +81,10 @@ const FollowingNumber = styled.p`
   font-weight: 700;
 `;
 
-export default function ProfileInfo({ userInfo }) {
+export default function ProfileInfo({
+  profileInfo,
+  isUserIsSameWithLoginUser,
+}) {
   const {
     _id,
     username,
@@ -91,16 +94,15 @@ export default function ProfileInfo({ userInfo }) {
     isfollow,
     followerCount,
     followingCount,
-  } = userInfo;
+  } = profileInfo;
 
-  const [followerNum, setFollowerNum] = useState(followerCount);
-  const useraccount = localStorage.getItem('accountname');
   const navigate = useNavigate();
+  const [followerCountStatus, setFollowerCountStatus] = useState(followerCount);
 
   const handleFollowNum = (isfollow) => {
     isfollow
-      ? setFollowerNum(followerNum - 1)
-      : setFollowerNum(followerNum + 1);
+      ? setFollowerCountStatus((prev) => prev - 1)
+      : setFollowerCountStatus((prev) => prev + 1);
   };
 
   return (
@@ -119,21 +121,21 @@ export default function ProfileInfo({ userInfo }) {
           onClick={() => {
             navigate(`/follow/${_id}/follower`, {
               state: {
-                accountname: accountname,
+                accountname,
                 username: username,
               },
             });
           }}
           className="follower"
         >
-          <FollowerNumber>{followerNum}</FollowerNumber>
+          <FollowerNumber>{followerCountStatus}</FollowerNumber>
           <FollowText>followers</FollowText>
         </FollowBtn>
         <FollowBtn
           onClick={() => {
             navigate(`/follow/${_id}/following`, {
               state: {
-                accountname: accountname,
+                accountname,
                 username: username,
               },
             });
@@ -144,14 +146,14 @@ export default function ProfileInfo({ userInfo }) {
           <FollowText>followings</FollowText>
         </FollowBtn>
       </UserInfoCol>
-      {useraccount !== accountname ? (
+      {isUserIsSameWithLoginUser ? (
+        <MyInfoBtns />
+      ) : (
         <UserInfoBtns
           handleFollowNum={handleFollowNum}
           isfollow={isfollow}
           accountname={accountname}
         />
-      ) : (
-        <MyInfoBtns />
       )}
     </UserCol>
   );

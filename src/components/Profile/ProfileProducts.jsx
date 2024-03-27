@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ProductItem, ProductCard } from 'components/Profile';
 import { ConfirmModal } from 'layouts/';
 import { useModal } from 'hooks';
-import { getProductListAPI, deleteProductAPI } from 'api/apis/product';
+import { deleteProductAPI } from 'api/apis/product';
 
 const ProductsCol = styled.section`
   display: flex;
@@ -35,9 +35,13 @@ const ProductList = styled.ul`
   overflow-y: hidden;
 `;
 
-export default function ProfileProducts({ accountname, setIsProductLoading }) {
-  const [products, setProducts] = useState([]);
+export default function ProfileProducts({
+  productList,
+  isUserIsSameWithLoginUser,
+}) {
+  const [products, setProducts] = useState(productList);
   const [selectedProduct, setSelectedProduct] = useState(null);
+
   const {
     isMenuOpen,
     isModalOpen,
@@ -47,16 +51,6 @@ export default function ProfileProducts({ accountname, setIsProductLoading }) {
     closeModal,
   } = useModal();
   const navigate = useNavigate();
-  const isCurrentUser = accountname === localStorage.getItem('accountname');
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const products = await getProductListAPI(accountname);
-      setProducts(products);
-      setIsProductLoading(false);
-    };
-    fetchProducts();
-  }, []);
 
   const deleteProduct = async () => {
     await deleteProductAPI(selectedProduct.id);
@@ -82,7 +76,7 @@ export default function ProfileProducts({ accountname, setIsProductLoading }) {
 
   return (
     <>
-      {products.length > 0 ? (
+      {products.length > 0 && (
         <ProductsCol>
           <ProductsWrapper>
             <Title>판매 중인 상품</Title>
@@ -100,17 +94,17 @@ export default function ProfileProducts({ accountname, setIsProductLoading }) {
             </ProductList>
           </ProductsWrapper>
         </ProductsCol>
-      ) : null}
+      )}
       {isMenuOpen && (
         <ProductCard
           product={selectedProduct}
           setIsMenuOpen={closeMenu}
           handleDelete={openModal}
           handleUpdate={handleProductUpdate}
-          isCurrentUser={isCurrentUser}
+          isCurrentUser={isUserIsSameWithLoginUser}
         />
       )}
-      {isCurrentUser && isModalOpen && (
+      {isUserIsSameWithLoginUser && isModalOpen && (
         <ConfirmModal
           title="상품을 삭제할까요?"
           confirmInfo="삭제"

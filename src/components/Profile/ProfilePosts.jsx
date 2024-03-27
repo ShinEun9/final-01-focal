@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { PostCard } from 'components/Common';
 import { BottomSheetModal, BottomSheetContent, ConfirmModal } from 'layouts';
 import {
@@ -8,7 +8,6 @@ import {
   PostNone,
   PostAlignButtons,
 } from 'components/Profile';
-
 import { deletePostAPI, reportPostAPI, userpostAPI } from 'api/apis/post';
 import { useModal, useScrollBottom } from 'hooks';
 
@@ -49,10 +48,14 @@ const PostListView = styled.ul`
 
 export default function ProfilePosts({
   elementRef,
-  accountname,
-  setIsPostLoading,
+  postList,
+  isUserIsSameWithLoginUser,
 }) {
-  const [posts, setPosts] = useState([]);
+  const navigate = useNavigate();
+  const { account_name: accountNameParams } = useParams();
+  const accountname = accountNameParams || localStorage.getItem('accountname');
+
+  const [posts, setPosts] = useState(postList);
   const [postId, setPostId] = useState(null);
   const [isListView, setIsListView] = useState(true);
   const {
@@ -64,34 +67,21 @@ export default function ProfilePosts({
     closeModal,
   } = useModal();
 
-  const useraccount = localStorage.getItem('accountname');
-  const navigate = useNavigate();
-
   const isBottom = useScrollBottom(elementRef);
-  const limit = 4;
+  const LIMIT = 4;
   const [skip, setSkip] = useState(0);
 
+  const fetchPosts = async (skip) => {
+    const res = await userpostAPI(accountname, skip, LIMIT);
+    setPosts((prevData) => [...prevData, ...res]);
+  };
+
   useEffect(() => {
-    if (isBottom && posts.length >= limit) {
-      fetchPosts(skip + limit);
-      setSkip((prevValue) => prevValue + limit);
+    if (isBottom && posts.length >= LIMIT) {
+      fetchPosts(skip + LIMIT);
+      setSkip((prevValue) => prevValue + LIMIT);
     }
   }, [isBottom]);
-
-  useEffect(() => {
-    fetchPosts(0);
-  }, []);
-
-  const fetchPosts = async (skip) => {
-    const res = await userpostAPI(accountname, skip, limit);
-    setIsPostLoading(false);
-
-    if (skip === 0) {
-      setPosts(res);
-    } else {
-      setPosts((prevData) => [...prevData, ...res]);
-    }
-  };
 
   const handleListAlign = () => {
     setIsListView(true);
@@ -103,7 +93,7 @@ export default function ProfilePosts({
 
   const handlePostDelete = async () => {
     await deletePostAPI(postId);
-    const res = await userpostAPI(accountname, skip, limit);
+    const res = await userpostAPI(accountname, skip, LIMIT);
     setPosts([...res]);
     closeMenu();
     closeModal();
@@ -158,11 +148,7 @@ export default function ProfilePosts({
 
       {isMenuOpen && (
         <BottomSheetModal setIsMenuOpen={closeMenu}>
-          {accountname !== useraccount ? (
-            <BottomSheetContent onClick={handlePostReport}>
-              신고
-            </BottomSheetContent>
-          ) : (
+          {isUserIsSameWithLoginUser ? (
             <>
               <BottomSheetContent onClick={openModal}>삭제</BottomSheetContent>
               <BottomSheetContent
@@ -173,6 +159,10 @@ export default function ProfilePosts({
                 수정
               </BottomSheetContent>
             </>
+          ) : (
+            <BottomSheetContent onClick={handlePostReport}>
+              신고
+            </BottomSheetContent>
           )}
         </BottomSheetModal>
       )}
