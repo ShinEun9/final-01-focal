@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Button, TextInput, ProfileImageUploader } from 'components/Common';
 import { accountnameRegex, validateMessage } from 'utils/';
-import { accountnameValidAPI } from 'api/apis/user';
+import { accountnameValidAPI } from 'api/apis';
 import { useDebounce } from 'hooks';
 
 const Form = styled.form`

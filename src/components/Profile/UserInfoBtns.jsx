@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'components/Common';
 import { ReactComponent as ShareIcon } from 'assets/icons/icon-share.svg';
 import { ReactComponent as ChatIcon } from 'assets/icons/icon-message.svg';
-import { followAPI, unfollowAPI } from 'api/apis/follow';
+import { followAPI, unfollowAPI } from 'api/apis';
 
 const BtnRow = styled.div`
   display: flex;

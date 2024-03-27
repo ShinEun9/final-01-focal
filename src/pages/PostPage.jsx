@@ -12,8 +12,13 @@ import { PostCard, TextInputBox } from 'components/Common';
 import { PostComment } from 'components/Post';
 
 import { useModal } from 'hooks';
-import { deletePostAPI, reportPostAPI, postDetailAPI } from 'api/apis/post';
-import { getCommentListAPI, createPostCommentAPI } from 'api/apis/comment';
+import {
+  deletePostAPI,
+  reportPostAPI,
+  getPostAPI,
+  getCommentListAPI,
+  createPostCommentAPI,
+} from 'api/apis';
 
 const Main = styled.main`
   margin-top: 48px;
@@ -72,7 +77,7 @@ export default function PostPage() {
     setIsLoading(true);
 
     try {
-      const response = await postDetailAPI(postId);
+      const response = await getPostAPI(postId);
       setPost(response.data.post);
 
       const commentCount = response.data.post.commentCount;

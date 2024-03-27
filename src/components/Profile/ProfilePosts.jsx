@@ -8,7 +8,7 @@ import {
   PostNone,
   PostAlignButtons,
 } from 'components/Profile';
-import { deletePostAPI, reportPostAPI, userpostAPI } from 'api/apis/post';
+import { deletePostAPI, reportPostAPI, getUserPostsAPI } from 'api/apis';
 import { useModal, useScrollBottom } from 'hooks';
 
 const PostsContainer = styled.section`
@@ -72,7 +72,7 @@ export default function ProfilePosts({
   const [skip, setSkip] = useState(0);
 
   const fetchPosts = async (skip) => {
-    const res = await userpostAPI(accountname, skip, LIMIT);
+    const res = await getUserPostsAPI(accountname, skip, LIMIT);
     setPosts((prevData) => [...prevData, ...res]);
   };
 
@@ -93,7 +93,7 @@ export default function ProfilePosts({
 
   const handlePostDelete = async () => {
     await deletePostAPI(postId);
-    const res = await userpostAPI(accountname, skip, LIMIT);
+    const res = await getUserPostsAPI(accountname, skip, LIMIT);
     setPosts([...res]);
     closeMenu();
     closeModal();

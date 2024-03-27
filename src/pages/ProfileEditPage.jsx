@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Header } from 'layouts';
 import { ProfileForm } from 'components/Common';
-import { getImageSrcAPI } from 'api/apis/image';
-import { editMyInfoAPI, getMyInfoAPI } from 'api/apis/user';
+import { getImageSrcAPI, editMyInfoAPI, getMyInfoAPI } from 'api/apis';
 
 const Main = styled.main`
   width: 100%;

@@ -9,7 +9,7 @@ import {
 import { TextInputBox } from 'components/Common';
 import { ChatRoom } from 'components/Chat';
 import { useModal } from 'hooks';
-import { searchUserAPI } from 'api/apis/user';
+import { searchUserAPI } from 'api/apis';
 
 export default function ChatRoomPage() {
   const { _id } = useParams();

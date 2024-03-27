@@ -3,7 +3,7 @@ import { useSetRecoilState } from 'recoil';
 import { loginState } from 'states';
 import styled from 'styled-components';
 import { Button, TextInput } from 'components/Common';
-import { loginAPI } from 'api/apis/user';
+import { loginAPI } from 'api/apis';
 
 const Form = styled.form`
   margin-bottom: 20px;

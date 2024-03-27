@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ProductItem, ProductCard } from 'components/Profile';
 import { ConfirmModal } from 'layouts/';
 import { useModal } from 'hooks';
-import { deleteProductAPI } from 'api/apis/product';
+import { deleteProductAPI } from 'api/apis';
 
 const ProductsCol = styled.section`
   display: flex;

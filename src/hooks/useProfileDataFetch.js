@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { userpostAPI } from 'api/apis/post';
-import { getProductListAPI } from 'api/apis/product';
-import { getMyInfoAPI } from 'api/apis/user';
 import { useParams } from 'react-router-dom';
-import { profileAPI } from 'api/apis/profile';
+import axios from 'axios';
+import {
+  getUserPostsAPI,
+  getProductsAPI,
+  getMyInfoAPI,
+  getProfileAPI,
+} from 'api/apis';
 
 const useProfileDataFetch = () => {
   const { account_name: accountNameParams } = useParams();
@@ -20,9 +22,9 @@ const useProfileDataFetch = () => {
   useEffect(() => {
     axios
       .all([
-        isUserIsSameWithLoginUser ? getMyInfoAPI() : profileAPI(accountname),
-        getProductListAPI(accountname),
-        userpostAPI(accountname, 0, 4),
+        isUserIsSameWithLoginUser ? getMyInfoAPI() : getProfileAPI(accountname),
+        getProductsAPI(accountname),
+        getUserPostsAPI(accountname, 0, 4),
       ])
       .then(
         axios.spread((res1, res2, res3) => {

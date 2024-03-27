@@ -8,7 +8,7 @@ import {
   Loading,
 } from 'layouts';
 import { useModal } from 'hooks';
-import { feedAPI, reportPostAPI } from 'api/apis/post';
+import { getPostsAPI, reportPostAPI } from 'api/apis';
 
 export default function PostsFeed({ postData, setPostData }) {
   // * 무한스크롤
@@ -18,7 +18,7 @@ export default function PostsFeed({ postData, setPostData }) {
 
   const getPosts = async () => {
     try {
-      const newPosts = await feedAPI(LIMIT, page * LIMIT);
+      const newPosts = await getPostsAPI(LIMIT, page * LIMIT);
 
       setPostData((prev) => ({
         ...prev,

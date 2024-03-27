@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useHandleResizeHeight } from 'hooks';
-import { getMultiImageSrcAPI } from 'api/apis/image';
+import { getMultiImageSrcAPI } from 'api/apis';
 import { getProperImgSrc, handleImageError, alertMessage } from 'utils';
 import delteBtn from 'assets/icons/delete.svg';
 import postImgUploadBtn from 'assets/images/image-upload.png';

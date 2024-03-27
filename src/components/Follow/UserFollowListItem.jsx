@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button, UserInfo } from 'components/Common';
-import { followAPI, unfollowAPI } from 'api/apis/follow';
+import { followAPI, unfollowAPI } from 'api/apis';
 
 const StyledLi = styled.li`
   display: flex;

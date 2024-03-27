@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Header, Loading, NavBar } from 'layouts';
 import { UserSearchListItem } from 'components/Search';
 import { useDebounce } from 'hooks';
-import { searchUserAPI } from 'api/apis/user';
+import { searchUserAPI } from 'api/apis';
 
 const Main = styled.main`
   width: 100%;
