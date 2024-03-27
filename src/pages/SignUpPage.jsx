@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { BasicLayout, BasicModal } from 'layouts';
 import { SignUpForm } from 'components/SignUp';
 import { ProfileForm } from 'components/Common';
-import { getImageSrcAPI } from 'api/apis/image';
-import { signupAPI } from 'api/apis/user';
+import { getImageSrcAPI, signupAPI } from 'api/apis';
 import { useModal } from 'hooks';
 
 const initialValue = {

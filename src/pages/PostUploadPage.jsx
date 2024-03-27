@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Header } from 'layouts';
 import { PostUpload } from 'components/Post';
 import { useNavigate } from 'react-router-dom';
-import { createPostAPI } from 'api/apis/post';
+import { createPostAPI } from 'api/apis';
 import { alertMessage } from 'utils';
 
 const PostMainStyle = styled.main`

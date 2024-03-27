@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import { TextInput, Button } from 'components/Common';
-import { emailValidAPI } from 'api/apis/user';
+import { emailValidAPI } from 'api/apis';
 import { emailRegex, validateMessage } from 'utils';
 import { useDebounce } from 'hooks';
 

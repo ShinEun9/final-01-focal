@@ -6,7 +6,7 @@ import { UserInfo, ImageCarousel, MoreButton } from 'components/Common';
 import { ReactComponent as HeartIcon } from 'assets/icons/icon-heart.svg';
 import { ReactComponent as CommentIcon } from 'assets/icons/icon-message-small.svg';
 import { convertTime } from 'utils';
-import { likeAPI } from 'api/apis/like';
+import { likeAPI } from 'api/apis';
 
 const PostArticle = styled.article`
   position: relative;

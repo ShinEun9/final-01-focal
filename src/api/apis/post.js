@@ -13,7 +13,7 @@ export const createPostAPI = async (content, image) => {
   }
 };
 
-export const feedAPI = async (limit, skip) => {
+export const getPostsAPI = async (limit, skip) => {
   try {
     const res = await authInstance.get(
       `/post/feed/?limit=${limit}&skip=${skip}`,
@@ -27,7 +27,7 @@ export const feedAPI = async (limit, skip) => {
   }
 };
 
-export const postDetailAPI = async (post_id) => {
+export const getPostAPI = async (post_id) => {
   try {
     const res = await authInstance.get(`/post/${post_id}`);
     return res;
@@ -65,7 +65,7 @@ export const reportPostAPI = async (postId) => {
   }
 };
 
-export const userpostAPI = async (accountname, skip, limit) => {
+export const getUserPostsAPI = async (accountname, skip, limit) => {
   try {
     const res = await authInstance.get(
       `/post/${accountname}/userpost/?limit=${limit}&skip=${skip}`,

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Header } from 'layouts';
 import { ProductUpload } from 'components/Product';
-import { createProductAPI } from 'api/apis/product';
+import { postProudctAPI } from 'api/apis';
 
 export default function ProductUploadPage() {
   const [buttonDisable, setButtonDisable] = useState(true);
@@ -11,7 +11,7 @@ export default function ProductUploadPage() {
   };
 
   const handleSubmit = async (productData) => {
-    await createProductAPI(productData);
+    await postProudctAPI(productData);
   };
 
   return (

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import moreBtn from 'assets/icons/icon-more.svg';
 import { ConfirmModal, BottomSheetContent, BottomSheetModal } from 'layouts';
 import { useModal } from 'hooks';
-import { deleteCommentAPI, reportCommentAPI } from 'api/apis/comment';
+import { deleteCommentAPI, reportCommentAPI } from 'api/apis';
 import { convertTime, getProperImgSrc, handleImageError } from 'utils';
 
 const CommentSection = styled.section`

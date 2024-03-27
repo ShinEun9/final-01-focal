@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Header } from 'layouts';
 import { ProductUpload } from 'components/Product';
-import { getProductDetailAPI, editProductAPI } from 'api/apis/product';
+import { getProductAPI, editProductAPI } from 'api/apis';
 
 export default function ProductEditPage() {
   const { product_id } = useParams();
@@ -15,7 +15,7 @@ export default function ProductEditPage() {
 
   useEffect(() => {
     const getData = async () => {
-      const product = await getProductDetailAPI(product_id);
+      const product = await getProductAPI(product_id);
 
       setInputValue({
         itemImage: product.itemImage,

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Header, Loading } from 'layouts';
 import { UserFollowListItem, FollowNone } from 'components/Follow';
 import { useScrollBottom } from 'hooks';
-import { followingAPI } from 'api/apis/follow';
+import { followingAPI } from 'api/apis';
 
 const Main = styled.main`
   width: 100%;

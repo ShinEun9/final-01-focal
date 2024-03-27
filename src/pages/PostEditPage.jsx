@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { Header } from 'layouts';
 import { PostUpload } from 'components/Post';
-import { editPostAPI, postDetailAPI } from 'api/apis/post';
+import { editPostAPI, getPostAPI } from 'api/apis';
 import { alertMessage } from 'utils';
 
 const PostMainStyle = styled.main`
@@ -38,7 +38,7 @@ export default function PostEditPage() {
     const getData = async () => {
       const {
         data: { post },
-      } = await postDetailAPI(post_id);
+      } = await getPostAPI(post_id);
 
       setInputValue({ content: post.content, image: post.image.split(',') });
     };

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { ImageUpload } from 'components/Product';
 import { TextInput, RadioInput, RadioInputGroup } from 'components/Common';
-import { getImageSrcAPI } from 'api/apis/image';
+import { getImageSrcAPI } from 'api/apis';
 
 const ProductMainStyle = styled.main`
   margin-top: 48px;
