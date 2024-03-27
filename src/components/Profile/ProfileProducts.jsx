@@ -5,6 +5,8 @@ import { ProductItem, ProductCard } from 'components/Profile';
 import { ConfirmModal } from 'layouts/';
 import { useModal } from 'hooks';
 import { getProductListAPI, deleteProductAPI } from 'api/apis/product';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { loadingStateFamily, profileLoadingState } from 'states';
 
 const ProductsCol = styled.section`
   display: flex;
@@ -35,9 +37,12 @@ const ProductList = styled.ul`
   overflow-y: hidden;
 `;
 
-export default function ProfileProducts({ accountname, setIsProductLoading }) {
+export default function ProfileProducts({ accountname }) {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const isProfileLoading = useRecoilValue(profileLoadingState);
+  const setIsProductLoading = useSetRecoilState(loadingStateFamily('product'));
+
   const {
     isMenuOpen,
     isModalOpen,
@@ -80,9 +85,10 @@ export default function ProfileProducts({ accountname, setIsProductLoading }) {
     navigate(`/product/${selectedProduct.id}/edit`);
   };
 
+  if (isProfileLoading) return;
   return (
     <>
-      {products.length > 0 ? (
+      {products.length > 0 && (
         <ProductsCol>
           <ProductsWrapper>
             <Title>판매 중인 상품</Title>
@@ -100,7 +106,7 @@ export default function ProfileProducts({ accountname, setIsProductLoading }) {
             </ProductList>
           </ProductsWrapper>
         </ProductsCol>
-      ) : null}
+      )}
       {isMenuOpen && (
         <ProductCard
           product={selectedProduct}

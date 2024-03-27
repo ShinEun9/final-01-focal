@@ -11,6 +11,8 @@ import {
 
 import { deletePostAPI, reportPostAPI, userpostAPI } from 'api/apis/post';
 import { useModal, useScrollBottom } from 'hooks';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { loadingStateFamily, profileLoadingState } from 'states';
 
 const PostsContainer = styled.section`
   display: flex;
@@ -50,7 +52,7 @@ const PostListView = styled.ul`
 export default function ProfilePosts({
   elementRef,
   accountname,
-  setIsPostLoading,
+  // setIsPostLoading,
 }) {
   const [posts, setPosts] = useState([]);
   const [postId, setPostId] = useState(null);
@@ -63,6 +65,9 @@ export default function ProfilePosts({
     openModal,
     closeModal,
   } = useModal();
+
+  const isProfileLoading = useRecoilValue(profileLoadingState);
+  const setIsPostLoading = useSetRecoilState(loadingStateFamily('post'));
 
   const useraccount = localStorage.getItem('accountname');
   const navigate = useNavigate();
@@ -116,6 +121,7 @@ export default function ProfilePosts({
     closeModal();
   };
 
+  if (isProfileLoading) return;
   return (
     <>
       {posts.length === 0 ? (

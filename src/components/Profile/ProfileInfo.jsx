@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { MyInfoBtns, UserInfoBtns } from 'components/Profile';
 import { getProperImgSrc, handleImageError } from 'utils';
+import { useRecoilValue } from 'recoil';
+import { profileLoadingState } from 'states';
 
 const UserCol = styled.section`
   display: flex;
@@ -82,6 +84,7 @@ const FollowingNumber = styled.p`
 `;
 
 export default function ProfileInfo({ userInfo }) {
+  const isProfileLoading = useRecoilValue(profileLoadingState);
   const {
     _id,
     username,
@@ -103,6 +106,7 @@ export default function ProfileInfo({ userInfo }) {
       : setFollowerNum(followerNum + 1);
   };
 
+  if (isProfileLoading) return;
   return (
     <UserCol>
       <h2 className="a11y-hidden">프로필 정보</h2>
