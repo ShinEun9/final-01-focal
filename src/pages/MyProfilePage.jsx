@@ -1,8 +1,7 @@
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
-import { loginState } from 'states';
 import {
   Header,
   NavBar,
@@ -12,8 +11,8 @@ import {
   BottomSheetContent,
 } from 'layouts';
 import { ProfileInfo, ProfileProducts, ProfilePosts } from 'components/Profile';
-import { useModal } from 'hooks';
-import { profileLoadingState } from 'states/ProfileLoadingState';
+import { loginState } from 'states';
+import { useModal, useProfileDataFetch } from 'hooks';
 
 const Main = styled.main`
   width: 100%;
@@ -22,8 +21,7 @@ const Main = styled.main`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: ${({ isProfileLoading }) =>
-    isProfileLoading ? 'center' : 'flex-start'};
+  justify-content: ${({ isLoading }) => (isLoading ? 'center' : 'flex-start')};
   min-width: 380px;
   margin-top: 48px;
   background-color: #f2f2f2;
@@ -32,7 +30,14 @@ const Main = styled.main`
 
 export default function MyProfilePage() {
   const elementRef = useRef(null);
-  const isProfileLoading = useRecoilValue(profileLoadingState);
+
+  const {
+    profileInfo,
+    productList,
+    postList,
+    isLoading,
+    isUserIsSameWithLoginUser,
+  } = useProfileDataFetch();
 
   const {
     isMenuOpen,
@@ -60,13 +65,28 @@ export default function MyProfilePage() {
         ellipsisBtnShow={true}
         backBtnShow={false}
       />
-      <Main ref={elementRef} isProfileLoading={isProfileLoading}>
+      <Main ref={elementRef} isLoading={isLoading}>
         <h1 className="a11y-hidden">나의 프로필 페이지</h1>
 
-        {isProfileLoading && <Loading />}
-        <ProfileInfo />
-        <ProfileProducts />
-        <ProfilePosts elementRef={elementRef} />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <ProfileInfo
+              profileInfo={profileInfo}
+              isUserIsSameWithLoginUser={isUserIsSameWithLoginUser}
+            />
+            <ProfileProducts
+              productList={productList}
+              isUserIsSameWithLoginUser={isUserIsSameWithLoginUser}
+            />
+            <ProfilePosts
+              elementRef={elementRef}
+              postList={postList}
+              isUserIsSameWithLoginUser={isUserIsSameWithLoginUser}
+            />
+          </>
+        )}
       </Main>
       <NavBar />
 

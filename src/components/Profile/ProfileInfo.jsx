@@ -1,12 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { MyInfoBtns, UserInfoBtns } from 'components/Profile';
 import { getProperImgSrc, handleImageError } from 'utils';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { loadingStateFamily, profileLoadingState } from 'states';
-import { getMyInfoAPI } from 'api/apis/user';
-import { profileAPI } from 'api/apis/profile';
 
 const UserCol = styled.section`
   display: flex;
@@ -85,37 +81,23 @@ const FollowingNumber = styled.p`
   font-weight: 700;
 `;
 
-export default function ProfileInfo() {
+export default function ProfileInfo({
+  profileInfo,
+  isUserIsSameWithLoginUser,
+}) {
+  const {
+    _id,
+    username,
+    accountname,
+    intro,
+    image,
+    isfollow,
+    followerCount,
+    followingCount,
+  } = profileInfo;
+
   const navigate = useNavigate();
-  const [profileData, setProfileData] = useState({});
-  const [followerCountStatus, setFollowerCountStatus] = useState(0);
-
-  const isProfileLoading = useRecoilValue(profileLoadingState);
-  const setIsUserLoading = useSetRecoilState(loadingStateFamily('user'));
-
-  const { account_name: accountNameParams } = useParams();
-  const accountname = accountNameParams || localStorage.getItem('accountname');
-  const isUserIsSameWithLoginUser =
-    accountname === localStorage.getItem('accountname');
-
-  useEffect(() => {
-    const fetchProfileData = async () => {
-      if (isUserIsSameWithLoginUser) {
-        const data = await getMyInfoAPI();
-        setProfileData(data);
-        setFollowerCountStatus(data.followerCount);
-        setIsUserLoading(false);
-      } else {
-        const data = await profileAPI(accountname);
-        setProfileData(data);
-
-        setFollowerCountStatus(data.followerCount);
-        setIsUserLoading(false);
-      }
-    };
-
-    fetchProfileData();
-  }, []);
+  const [followerCountStatus, setFollowerCountStatus] = useState(followerCount);
 
   const handleFollowNum = (isfollow) => {
     isfollow
@@ -123,25 +105,24 @@ export default function ProfileInfo() {
       : setFollowerCountStatus((prev) => prev + 1);
   };
 
-  if (isProfileLoading) return;
   return (
     <UserCol>
       <h2 className="a11y-hidden">프로필 정보</h2>
       <UserInfoCol>
         <UserImage
-          src={getProperImgSrc(profileData.image)}
+          src={getProperImgSrc(image)}
           onError={handleImageError}
           alt="프로필 이미지"
         />
-        <UserName>{profileData.username}</UserName>
+        <UserName>{username}</UserName>
         <UserAccount>@ {accountname}</UserAccount>
-        <UserTitle>{profileData.intro}</UserTitle>
+        <UserTitle>{intro}</UserTitle>
         <FollowBtn
           onClick={() => {
-            navigate(`/follow/${profileData._id}/follower`, {
+            navigate(`/follow/${_id}/follower`, {
               state: {
                 accountname,
-                username: profileData.username,
+                username: username,
               },
             });
           }}
@@ -152,16 +133,16 @@ export default function ProfileInfo() {
         </FollowBtn>
         <FollowBtn
           onClick={() => {
-            navigate(`/follow/${profileData._id}/following`, {
+            navigate(`/follow/${_id}/following`, {
               state: {
                 accountname,
-                username: profileData.username,
+                username: username,
               },
             });
           }}
           className="following"
         >
-          <FollowingNumber>{profileData.followingCount}</FollowingNumber>
+          <FollowingNumber>{followingCount}</FollowingNumber>
           <FollowText>followings</FollowText>
         </FollowBtn>
       </UserInfoCol>
@@ -170,7 +151,7 @@ export default function ProfileInfo() {
       ) : (
         <UserInfoBtns
           handleFollowNum={handleFollowNum}
-          isfollow={profileData.isfollow}
+          isfollow={isfollow}
           accountname={accountname}
         />
       )}

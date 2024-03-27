@@ -1,12 +1,10 @@
 import styled from 'styled-components';
-import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ProductItem, ProductCard } from 'components/Profile';
 import { ConfirmModal } from 'layouts/';
 import { useModal } from 'hooks';
-import { getProductListAPI, deleteProductAPI } from 'api/apis/product';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { loadingStateFamily, profileLoadingState } from 'states';
+import { deleteProductAPI } from 'api/apis/product';
 
 const ProductsCol = styled.section`
   display: flex;
@@ -37,16 +35,12 @@ const ProductList = styled.ul`
   overflow-y: hidden;
 `;
 
-export default function ProfileProducts() {
-  const [products, setProducts] = useState([]);
+export default function ProfileProducts({
+  productList,
+  isUserIsSameWithLoginUser,
+}) {
+  const [products, setProducts] = useState(productList);
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const isProfileLoading = useRecoilValue(profileLoadingState);
-  const setIsProductLoading = useSetRecoilState(loadingStateFamily('product'));
-
-  const { account_name: accountNameParams } = useParams();
-  const accountname = accountNameParams || localStorage.getItem('accountname');
-  const isUserIsSameWithLoginUser =
-    accountname === localStorage.getItem('accountname');
 
   const {
     isMenuOpen,
@@ -57,15 +51,6 @@ export default function ProfileProducts() {
     closeModal,
   } = useModal();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      const products = await getProductListAPI(accountname);
-      setProducts(products);
-      setIsProductLoading(false);
-    };
-    fetchProducts();
-  }, []);
 
   const deleteProduct = async () => {
     await deleteProductAPI(selectedProduct.id);
@@ -89,7 +74,6 @@ export default function ProfileProducts() {
     navigate(`/product/${selectedProduct.id}/edit`);
   };
 
-  if (isProfileLoading) return;
   return (
     <>
       {products.length > 0 && (

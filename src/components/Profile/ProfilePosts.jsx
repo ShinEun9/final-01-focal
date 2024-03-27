@@ -8,11 +8,8 @@ import {
   PostNone,
   PostAlignButtons,
 } from 'components/Profile';
-
 import { deletePostAPI, reportPostAPI, userpostAPI } from 'api/apis/post';
 import { useModal, useScrollBottom } from 'hooks';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
-import { loadingStateFamily, profileLoadingState } from 'states';
 
 const PostsContainer = styled.section`
   display: flex;
@@ -49,8 +46,16 @@ const PostListView = styled.ul`
   gap: 65px;
 `;
 
-export default function ProfilePosts({ elementRef }) {
-  const [posts, setPosts] = useState([]);
+export default function ProfilePosts({
+  elementRef,
+  postList,
+  isUserIsSameWithLoginUser,
+}) {
+  const navigate = useNavigate();
+  const { account_name: accountNameParams } = useParams();
+  const accountname = accountNameParams || localStorage.getItem('accountname');
+
+  const [posts, setPosts] = useState(postList);
   const [postId, setPostId] = useState(null);
   const [isListView, setIsListView] = useState(true);
   const {
@@ -62,41 +67,21 @@ export default function ProfilePosts({ elementRef }) {
     closeModal,
   } = useModal();
 
-  const isProfileLoading = useRecoilValue(profileLoadingState);
-  const setIsPostLoading = useSetRecoilState(loadingStateFamily('post'));
-
-  const { account_name: accountNameParams } = useParams();
-  const accountname = accountNameParams || localStorage.getItem('accountname');
-  const isUserIsSameWithLoginUser =
-    accountname === localStorage.getItem('accountname');
-
-  const navigate = useNavigate();
-
   const isBottom = useScrollBottom(elementRef);
-  const limit = 4;
+  const LIMIT = 4;
   const [skip, setSkip] = useState(0);
 
+  const fetchPosts = async (skip) => {
+    const res = await userpostAPI(accountname, skip, LIMIT);
+    setPosts((prevData) => [...prevData, ...res]);
+  };
+
   useEffect(() => {
-    if (isBottom && posts.length >= limit) {
-      fetchPosts(skip + limit);
-      setSkip((prevValue) => prevValue + limit);
+    if (isBottom && posts.length >= LIMIT) {
+      fetchPosts(skip + LIMIT);
+      setSkip((prevValue) => prevValue + LIMIT);
     }
   }, [isBottom]);
-
-  useEffect(() => {
-    fetchPosts(0);
-  }, []);
-
-  const fetchPosts = async (skip) => {
-    const res = await userpostAPI(accountname, skip, limit);
-    setIsPostLoading(false);
-
-    if (skip === 0) {
-      setPosts(res);
-    } else {
-      setPosts((prevData) => [...prevData, ...res]);
-    }
-  };
 
   const handleListAlign = () => {
     setIsListView(true);
@@ -108,7 +93,7 @@ export default function ProfilePosts({ elementRef }) {
 
   const handlePostDelete = async () => {
     await deletePostAPI(postId);
-    const res = await userpostAPI(accountname, skip, limit);
+    const res = await userpostAPI(accountname, skip, LIMIT);
     setPosts([...res]);
     closeMenu();
     closeModal();
@@ -121,7 +106,6 @@ export default function ProfilePosts({ elementRef }) {
     closeModal();
   };
 
-  if (isProfileLoading) return;
   return (
     <>
       {posts.length === 0 ? (
