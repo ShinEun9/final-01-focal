@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ProductItem, ProductCard } from 'components/Profile';
 import { ConfirmModal } from 'layouts/';
 import { useModal } from 'hooks';
@@ -37,11 +37,16 @@ const ProductList = styled.ul`
   overflow-y: hidden;
 `;
 
-export default function ProfileProducts({ accountname }) {
+export default function ProfileProducts() {
   const [products, setProducts] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const isProfileLoading = useRecoilValue(profileLoadingState);
   const setIsProductLoading = useSetRecoilState(loadingStateFamily('product'));
+
+  const { account_name: accountNameParams } = useParams();
+  const accountname = accountNameParams || localStorage.getItem('accountname');
+  const isUserIsSameWithLoginUser =
+    accountname === localStorage.getItem('accountname');
 
   const {
     isMenuOpen,
@@ -52,7 +57,6 @@ export default function ProfileProducts({ accountname }) {
     closeModal,
   } = useModal();
   const navigate = useNavigate();
-  const isCurrentUser = accountname === localStorage.getItem('accountname');
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -113,10 +117,10 @@ export default function ProfileProducts({ accountname }) {
           setIsMenuOpen={closeMenu}
           handleDelete={openModal}
           handleUpdate={handleProductUpdate}
-          isCurrentUser={isCurrentUser}
+          isCurrentUser={isUserIsSameWithLoginUser}
         />
       )}
-      {isCurrentUser && isModalOpen && (
+      {isUserIsSameWithLoginUser && isModalOpen && (
         <ConfirmModal
           title="상품을 삭제할까요?"
           confirmInfo="삭제"

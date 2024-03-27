@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { PostCard } from 'components/Common';
 import { BottomSheetModal, BottomSheetContent, ConfirmModal } from 'layouts';
 import {
@@ -49,11 +49,7 @@ const PostListView = styled.ul`
   gap: 65px;
 `;
 
-export default function ProfilePosts({
-  elementRef,
-  accountname,
-  // setIsPostLoading,
-}) {
+export default function ProfilePosts({ elementRef }) {
   const [posts, setPosts] = useState([]);
   const [postId, setPostId] = useState(null);
   const [isListView, setIsListView] = useState(true);
@@ -69,7 +65,11 @@ export default function ProfilePosts({
   const isProfileLoading = useRecoilValue(profileLoadingState);
   const setIsPostLoading = useSetRecoilState(loadingStateFamily('post'));
 
-  const useraccount = localStorage.getItem('accountname');
+  const { account_name: accountNameParams } = useParams();
+  const accountname = accountNameParams || localStorage.getItem('accountname');
+  const isUserIsSameWithLoginUser =
+    accountname === localStorage.getItem('accountname');
+
   const navigate = useNavigate();
 
   const isBottom = useScrollBottom(elementRef);
@@ -164,11 +164,7 @@ export default function ProfilePosts({
 
       {isMenuOpen && (
         <BottomSheetModal setIsMenuOpen={closeMenu}>
-          {accountname !== useraccount ? (
-            <BottomSheetContent onClick={handlePostReport}>
-              신고
-            </BottomSheetContent>
-          ) : (
+          {isUserIsSameWithLoginUser ? (
             <>
               <BottomSheetContent onClick={openModal}>삭제</BottomSheetContent>
               <BottomSheetContent
@@ -179,6 +175,10 @@ export default function ProfilePosts({
                 수정
               </BottomSheetContent>
             </>
+          ) : (
+            <BottomSheetContent onClick={handlePostReport}>
+              신고
+            </BottomSheetContent>
           )}
         </BottomSheetModal>
       )}
