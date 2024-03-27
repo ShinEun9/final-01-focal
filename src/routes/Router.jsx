@@ -46,10 +46,10 @@ export default function Router() {
           </Route>
           <Route path="/profile/" element={<Outlet />}>
             <Route path="" element={<MyProfilePage />} />
-            <Route path=":_id" element={<UserProfilePage />} />
+            <Route path=":account_name" element={<UserProfilePage />} />
             <Route path="edit" element={<ProfileEditPage />} />
           </Route>
-          <Route path="/follow/:_id/" element={<Outlet />}>
+          <Route path="/follow/:account_name" element={<Outlet />}>
             <Route path="follower" element={<FollowersPage />} />
             <Route path="following" element={<FollowingsPage />} />
           </Route>
