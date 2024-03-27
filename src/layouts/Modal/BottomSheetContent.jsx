@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Portal } from 'layouts/';
 
 const BottomSheetItem = styled.li`
   padding: 12px 0;
@@ -13,10 +12,8 @@ const BottomSheetItem = styled.li`
 
 export default function BottomSheetContent({ onClick, children }) {
   return (
-    <Portal>
-      <BottomSheetItem onClick={onClick}>
-        <button>{children}</button>
-      </BottomSheetItem>
-    </Portal>
+    <BottomSheetItem onClick={onClick}>
+      <button>{children}</button>
+    </BottomSheetItem>
   );
 }
