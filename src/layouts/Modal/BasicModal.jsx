@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Portal } from '..';
 
 const Overlay = styled.div`
   position: fixed;
@@ -54,16 +55,18 @@ const Button = styled.button`
 export default function BasicModal({ closeModal, children }) {
   return (
     <Overlay>
-      <ModalContainer>
-        <Title>{children}</Title>
-        <Button
-          onClick={() => {
-            closeModal();
-          }}
-        >
-          확인
-        </Button>
-      </ModalContainer>
+      <Portal>
+        <ModalContainer>
+          <Title>{children}</Title>
+          <Button
+            onClick={() => {
+              closeModal();
+            }}
+          >
+            확인
+          </Button>
+        </ModalContainer>
+      </Portal>
     </Overlay>
   );
 }

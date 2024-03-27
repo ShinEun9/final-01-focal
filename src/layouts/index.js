@@ -7,6 +7,7 @@ import BottomSheetContent from './Modal/BottomSheetContent';
 import BottomSheetModal from './Modal/BottomSheetModal';
 import ConfirmModal from './Modal/ConfirmModal';
 import NavBar from './NavBar/NavBar';
+import Portal from './Portal/Portal';
 
 export {
   Header,
@@ -18,4 +19,5 @@ export {
   BottomSheetModal,
   ConfirmModal,
   NavBar,
+  Portal,
 };

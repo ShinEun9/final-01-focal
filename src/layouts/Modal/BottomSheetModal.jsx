@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import { Portal } from 'layouts';
 
 const slideUpAnimation = keyframes`
   from {
@@ -50,9 +51,11 @@ export default function BottomSheetModal({ children, setIsMenuOpen }) {
   };
 
   return (
-    <BottomSheetSection onClick={handleBackgroundClick}>
-      <h2 className="a11y-hidden">메뉴</h2>
-      <BottomSheet onClick={handleMenu}>{children}</BottomSheet>
-    </BottomSheetSection>
+    <Portal>
+      <BottomSheetSection onClick={handleBackgroundClick}>
+        <h2 className="a11y-hidden">메뉴</h2>
+        <BottomSheet onClick={handleMenu}>{children}</BottomSheet>
+      </BottomSheetSection>
+    </Portal>
   );
 }

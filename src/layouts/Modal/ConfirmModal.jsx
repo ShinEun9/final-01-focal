@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Portal } from 'layouts';
 
 const Container = styled.section`
   position: fixed;
@@ -59,15 +60,17 @@ export default function ConfirmModal({
   };
 
   return (
-    <Container>
-      <h2 className="a11y-hidden">경고 메시지</h2>
-      <ModalWrapper>
-        <ModalTitle>{title}</ModalTitle>
-        <ButtonsRow>
-          <CancelButton onClick={closeModal}>취소</CancelButton>
-          <ConfirmButton onClick={onClick}>{confirmInfo}</ConfirmButton>
-        </ButtonsRow>
-      </ModalWrapper>
-    </Container>
+    <Portal>
+      <Container>
+        <h2 className="a11y-hidden">경고 메시지</h2>
+        <ModalWrapper>
+          <ModalTitle>{title}</ModalTitle>
+          <ButtonsRow>
+            <CancelButton onClick={closeModal}>취소</CancelButton>
+            <ConfirmButton onClick={onClick}>{confirmInfo}</ConfirmButton>
+          </ButtonsRow>
+        </ModalWrapper>
+      </Container>
+    </Portal>
   );
 }
