@@ -1,16 +1,6 @@
 import { authInstance } from 'api/instance';
 
-export const createProductAPI = async (productData) => {
-  try {
-    const response = await authInstance.post('/product', productData);
-
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const getProductListAPI = async (accountname) => {
+export const getProductsAPI = async (accountname) => {
   try {
     const response = await authInstance.get(`/product/${accountname}`);
 
@@ -20,19 +10,21 @@ export const getProductListAPI = async (accountname) => {
   }
 };
 
-export const deleteProductAPI = async (productId) => {
+export const getProductAPI = async (productId) => {
   try {
-    await authInstance.delete(`/product/${productId}`);
+    const response = await authInstance.get(`/product/detail/${productId}`);
+
+    return response.data.product;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getProductDetailAPI = async (productId) => {
+export const postProudctAPI = async (productData) => {
   try {
-    const response = await authInstance.get(`/product/detail/${productId}`);
+    const response = await authInstance.post('/product', productData);
 
-    return response.data.product;
+    return response;
   } catch (error) {
     console.log(error);
   }
@@ -46,6 +38,14 @@ export const editProductAPI = async (productId, productData) => {
     );
 
     return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const deleteProductAPI = async (productId) => {
+  try {
+    await authInstance.delete(`/product/${productId}`);
   } catch (error) {
     console.log(error);
   }
