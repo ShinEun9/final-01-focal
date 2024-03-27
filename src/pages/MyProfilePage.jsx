@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
@@ -13,11 +13,7 @@ import {
 } from 'layouts';
 import { ProfileInfo, ProfileProducts, ProfilePosts } from 'components/Profile';
 import { useModal } from 'hooks';
-import { getMyInfoAPI } from 'api/apis/user';
-import {
-  loadingStateFamily,
-  profileLoadingState,
-} from 'states/ProfileLoadingState';
+import { profileLoadingState } from 'states/ProfileLoadingState';
 
 const Main = styled.main`
   width: 100%;
@@ -37,9 +33,7 @@ const Main = styled.main`
 export default function MyProfilePage() {
   const elementRef = useRef(null);
   const isProfileLoading = useRecoilValue(profileLoadingState);
-  const setIsUserLoading = useSetRecoilState(loadingStateFamily('user'));
 
-  const [userData, setUserData] = useState('');
   const {
     isMenuOpen,
     isModalOpen,
@@ -58,15 +52,6 @@ export default function MyProfilePage() {
     setIsLogined(false);
   };
 
-  useEffect(() => {
-    const fetchUserData = async () => {
-      const user = await getMyInfoAPI();
-      setUserData(user);
-      setIsUserLoading(false);
-    };
-    fetchUserData();
-  }, []);
-
   return (
     <>
       <Header
@@ -79,20 +64,9 @@ export default function MyProfilePage() {
         <h1 className="a11y-hidden">나의 프로필 페이지</h1>
 
         {isProfileLoading && <Loading />}
-        {userData && (
-          <>
-            <ProfileInfo userInfo={userData} setUserData={setUserData} />
-            <ProfileProducts
-              accountname={userData.accountname}
-              // setIsProductLoading={setIsProductLoading}
-            />
-            <ProfilePosts
-              elementRef={elementRef}
-              accountname={userData.accountname}
-              // setIsPostLoading={setIsPostLoading}
-            />
-          </>
-        )}
+        <ProfileInfo />
+        <ProfileProducts />
+        <ProfilePosts elementRef={elementRef} />
       </Main>
       <NavBar />
 
