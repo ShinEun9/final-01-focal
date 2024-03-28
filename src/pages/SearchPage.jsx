@@ -1,6 +1,8 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import AutoSizer from 'react-virtualized-auto-sizer';
+import { FixedSizeList } from 'react-window';
 import styled from 'styled-components';
-import { Header, Loading, NavBar } from 'layouts';
+import { Header, NavBar } from 'layouts';
 import { UserSearchListItem } from 'components/Search';
 import { useDebounce } from 'hooks';
 import { searchUserAPI } from 'api/apis';
@@ -8,30 +10,22 @@ import { searchUserAPI } from 'api/apis';
 const Main = styled.main`
   width: 100%;
   height: calc(100vh - 108px);
-  overflow-x: hidden;
-  overflow-y: auto;
   margin-top: 48px;
-  padding: 20px 16px;
 
   & > section {
-    & > ul li:not(:last-child) {
-      margin-bottom: 16px;
-    }
+    height: 100%;
   }
 `;
 
 export default function SearchPage() {
-  const [loading, setLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [users, setUsers] = useState([]);
   const debouncedValue = useDebounce(inputValue);
 
   const getData = useCallback(async () => {
     if (inputValue) {
-      setLoading(true);
       const { data } = await searchUserAPI(inputValue);
       setUsers(data);
-      setLoading(false);
     } else {
       setUsers([]);
     }
@@ -49,24 +43,30 @@ export default function SearchPage() {
           setInputValue(e.target.value);
         }}
       />
-      {loading ? (
-        <Loading />
-      ) : (
-        <Main>
-          <section>
-            <h2 className="a11y-hidden">검색 리스트 결과</h2>
-            <ul>
-              {users.map((user) => (
-                <UserSearchListItem
-                  key={user._id}
-                  user={user}
-                  searchQuery={inputValue}
-                />
-              ))}
-            </ul>
-          </section>
-        </Main>
-      )}
+      <Main>
+        <section>
+          <h2 className="a11y-hidden">검색 리스트 결과</h2>
+          <AutoSizer style={{ height: '100%', width: '100%' }}>
+            {({ height }) => (
+              <FixedSizeList
+                height={height}
+                itemCount={users.length}
+                itemSize={65}
+                width={'100%'}
+              >
+                {({ index, style }) => (
+                  <UserSearchListItem
+                    key={users[index]._id}
+                    user={users[index]}
+                    searchQuery={inputValue}
+                    style={style}
+                  />
+                )}
+              </FixedSizeList>
+            )}
+          </AutoSizer>
+        </section>
+      </Main>
 
       <NavBar />
     </>
