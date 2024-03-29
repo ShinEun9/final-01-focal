@@ -45,32 +45,33 @@ const UserInfoLink = styled(Link)`
 `;
 
 export default function UserInfo({ user, searchQuery = null }) {
-  const searchUserName = () => {
-    if (searchQuery) {
-      return user.username.replaceAll(
-        searchQuery,
-        `<span class="keyword">${searchQuery}</span>`,
-      );
-    }
+  const highlightSearchQuery = (username, query) => {
+    if (!query) return username;
+    const parts = username.split(new RegExp(`(${query})`, 'gi'));
+    return parts.map((part, index) =>
+      part.toLowerCase() === query.toLowerCase() ? (
+        <span key={index} className="keyword">
+          {part}
+        </span>
+      ) : (
+        part
+      ),
+    );
   };
 
   return (
     <UserInfoLink to={`/profile/${user.accountname}`}>
       <img
+        loading="lazy"
         className="userinfo-img"
         src={getProperImgSrc(user.image)}
         onError={handleImageError}
         alt="유저이미지"
       />
       <div className="userinfo-txt">
-        {searchQuery ? (
-          <strong
-            className="username"
-            dangerouslySetInnerHTML={{ __html: searchUserName() }}
-          ></strong>
-        ) : (
-          <strong className="username">{user.username}</strong>
-        )}
+        <strong className="username">
+          {highlightSearchQuery(user.username, searchQuery)}
+        </strong>
         <p className="accountname">@ {user.accountname}</p>
       </div>
     </UserInfoLink>
