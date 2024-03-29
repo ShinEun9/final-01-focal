@@ -8,7 +8,7 @@ import { followerAPI } from 'api/apis';
 
 const Main = styled.main`
   width: 100%;
-  height: calc(100vh - 48px);
+  height: calc(100dvh - 48px);
   overflow-y: auto;
   margin-top: 48px;
 
