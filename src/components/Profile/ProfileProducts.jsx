@@ -101,7 +101,7 @@ export default function ProfileProducts({
           setIsMenuOpen={closeMenu}
           handleDelete={openModal}
           handleUpdate={handleProductUpdate}
-          isCurrentUser={isUserIsSameWithLoginUser}
+          isUserIsSameWithLoginUser={isUserIsSameWithLoginUser}
         />
       )}
       {isUserIsSameWithLoginUser && isModalOpen && (
