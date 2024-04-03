@@ -60,13 +60,15 @@ export default function ProductUpload({
       return;
     }
 
-    const { value } = e.target;
+    let { value } = e.target;
     if (id === 'itemPrice') {
-      const price = parseInt(value.replace(/,/g, ''));
-      setInputValue((prev) => ({ ...prev, [id]: price }));
-    } else {
-      const { value } = e.target;
+      value = parseInt(value.replace(/,/g, ''));
       setInputValue((prev) => ({ ...prev, [id]: value }));
+    } else if (id === 'itemName') {
+      setInputValue((prev) => ({ ...prev, [id]: value }));
+    } else {
+      const { name } = e.target;
+      setInputValue((prev) => ({ ...prev, [name]: value }));
     }
   };
 
@@ -115,7 +117,8 @@ export default function ProductUpload({
             {ITEM_TYPE.map((item) => (
               <RadioInput
                 key={item}
-                id={'itemType'}
+                name={'itemType'}
+                id={item}
                 value={item}
                 onChange={handleInputChange}
                 checked={item === itemType}
