@@ -37,27 +37,20 @@ const RadioInputBox = styled.div`
   }
 `;
 
-function RadioInput({
-  id,
-  children,
-  error = '',
-  validate,
-  value,
-  onChange,
-  checked,
-}) {
+function RadioInput({ id, name, children, value, onChange, checked }) {
   return (
     <RadioInputBox>
-      <input
-        type="radio"
-        id={id}
-        onBlur={validate}
-        checked={checked}
-        onChange={onChange}
-        value={value}
-      />
-      <label htmlFor={id}>{children}</label>
-      {error && <p>*{error}</p>}
+      <label htmlFor={id}>
+        <input
+          id={id}
+          name={name}
+          type="radio"
+          checked={checked}
+          onChange={onChange}
+          value={value}
+        />
+        {children}
+      </label>
     </RadioInputBox>
   );
 }
