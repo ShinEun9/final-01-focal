@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import { Header } from 'layouts';
 import { ProductUpload } from 'components/Product';
-import { postProudctAPI } from 'api/apis';
+import { getIsProductFormValid } from 'utils';
 
 export default function ProductUploadPage() {
-  const [buttonDisable, setButtonDisable] = useState(true);
+  const [inputValue, setInputValue] = useState({
+    itemImage: null,
+    itemType: '필름',
+    itemName: '',
+    itemPrice: null,
+  });
+  const { itemImage, itemName, itemPrice } = inputValue;
 
-  const handleValidChange = (isValid) => {
-    setButtonDisable(!isValid);
-  };
-
-  const handleSubmit = async (productData) => {
-    await postProudctAPI(productData);
-  };
+  const btnDisabled = getIsProductFormValid(itemName, itemImage, itemPrice);
 
   return (
     <>
@@ -20,14 +20,9 @@ export default function ProductUploadPage() {
         type="upload"
         buttonId="product"
         buttonText="저장"
-        btnDisabled={buttonDisable}
+        btnDisabled={btnDisabled}
       />
-      <ProductUpload
-        onValidChange={handleValidChange}
-        handleSubmit={handleSubmit}
-        inputValue={{}}
-        setInputValue={() => {}}
-      />
+      <ProductUpload inputValue={inputValue} setInputValue={setInputValue} />
     </>
   );
 }
