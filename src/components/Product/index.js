@@ -1,4 +1,4 @@
-import ImageUpload from './ImageUpload';
 import ProductUpload from './ProductUpload';
+import ProductImageUpload from './ProductImageUpload';
 
-export { ImageUpload, ProductUpload };
+export { ProductUpload, ProductImageUpload };
