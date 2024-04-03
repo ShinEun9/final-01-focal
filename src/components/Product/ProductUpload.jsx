@@ -94,7 +94,6 @@ export default function ProductUpload({
     };
 
     if (isEditMode) {
-      console.log(productData);
       await editProductAPI(productId, productData);
     } else {
       await postProudctAPI(productData);
