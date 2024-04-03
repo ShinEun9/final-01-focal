@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useMemo } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { ImageUpload } from 'components/Product';
 import { TextInput, RadioInput, RadioInputGroup } from 'components/Common';
-import { getImageSrcAPI } from 'api/apis';
+import { ProductImageUpload } from 'components/Product';
+import { editProductAPI, getImageSrcAPI, postProudctAPI } from 'api/apis';
+import { getFormattedPrice } from 'utils';
 
 const ProductMainStyle = styled.main`
   margin-top: 48px;
@@ -31,166 +32,114 @@ const ProductFormStyle = styled.form`
   }
 `;
 
+const ITEM_TYPE = ['필름', '카메라'];
+
 export default function ProductUpload({
-  onValidChange,
-  handleSubmit,
-  handleEditSubmit,
   inputValue,
   setInputValue,
-  isEditMode,
+  isEditMode = false,
 }) {
-  const [name, setName] = useState('');
-  const [price, setPrice] = useState('');
-  const [displayPrice, setDisplayPrice] = useState('');
-  const [itemType, setItemType] = useState(inputValue.itemType);
-  const [image, setImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState(
-    inputValue.itemImage || null,
-  );
   const navigate = useNavigate();
+  const { product_id: productId } = useParams();
 
-  useEffect(() => {
-    setItemType(inputValue.itemType);
-  }, [inputValue.itemType]);
+  const { itemImage, itemType, itemName, itemPrice } = inputValue;
 
-  useEffect(() => {
-    if (inputValue.itemName && inputValue.price) {
-      setName(inputValue.itemName);
-      setDisplayPrice(inputValue.price);
+  const imagePreview = useMemo(() => {
+    if (!itemImage) return null;
+    else if (typeof itemImage === 'string') return itemImage;
+    else return URL.createObjectURL(itemImage);
+  }, [itemImage]);
+
+  const displayPrice = useMemo(() => getFormattedPrice(itemPrice), [itemPrice]);
+
+  const handleInputChange = (e) => {
+    const { id } = e.target;
+    if (id === 'itemImage') {
+      const file = e.target.files[0];
+      setInputValue((prev) => ({ ...prev, itemImage: file }));
+      return;
     }
-  }, [inputValue.itemName]);
 
-  const handlePriceChange = (e) => {
-    const numericPrice = e.target.value.replace(/[^0-9]/g, '');
-    setPrice(numericPrice);
-
-    if (numericPrice) {
-      const formattedPrice = numericPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-      setInputValue((prevInputValue) => ({
-        ...prevInputValue,
-        price: Number(numericPrice),
-      }));
-      setDisplayPrice(formattedPrice);
+    const { value } = e.target;
+    if (id === 'itemPrice') {
+      const price = parseInt(value.replace(/,/g, ''));
+      setInputValue((prev) => ({ ...prev, [id]: price }));
     } else {
-      setDisplayPrice('');
-      setInputValue((prevInputValue) => ({
-        ...prevInputValue,
-        price: 0,
-      }));
+      const { value } = e.target;
+      setInputValue((prev) => ({ ...prev, [id]: value }));
     }
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setImage(file);
+  const handleImageSubmit = async () => {
+    const { filename } = await getImageSrcAPI(itemImage);
+    const image = `${process.env.REACT_APP_BASE_URL}${filename}`;
 
-    if (file) {
-      setImagePreview(URL.createObjectURL(file));
-      setInputValue((prevInputValue) => ({
-        ...prevInputValue,
-        itemImage: file,
-      }));
-    } else {
-      setImagePreview(null);
-      setInputValue((prevInputValue) => ({
-        ...prevInputValue,
-        itemImage: '',
-      }));
-    }
+    return image;
   };
 
-  const handleImageSubmit = async (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    let itemImage = inputValue.itemImage;
-
-    if (image) {
-      const { filename } = await getImageSrcAPI(image);
-      itemImage = `${process.env.REACT_APP_BASE_URL}${filename}`;
+    let image;
+    if (itemImage instanceof File) {
+      image = await handleImageSubmit();
     }
 
     const productData = {
       product: {
-        itemName: name || inputValue.itemName,
-        price: Number(price) || inputValue.price,
-        link: itemType || inputValue.itemType,
-        itemImage: itemImage,
+        itemName,
+        price: itemPrice,
+        link: itemType,
+        itemImage: image,
       },
     };
 
     if (isEditMode) {
-      await handleEditSubmit(productData);
+      console.log(productData);
+      await editProductAPI(productId, productData);
     } else {
-      await handleSubmit(productData);
+      await postProudctAPI(productData);
     }
 
     navigate('/profile');
   };
 
-  const isSaveButtonDisabled =
-    !name ||
-    name.length < 2 ||
-    name.length > 15 ||
-    !price ||
-    Number(price) <= 0 ||
-    !image ||
-    !itemType;
-
-  useEffect(() => {
-    if (onValidChange && !isEditMode) {
-      onValidChange(!isSaveButtonDisabled);
-    }
-  }, [name, price, image, itemType, onValidChange]);
-
-  useEffect(() => {
-    setInputValue((prevInputValue) => ({
-      ...prevInputValue,
-      price: displayPrice !== '' ? displayPrice : prevInputValue.price,
-    }));
-  }, [displayPrice, setInputValue]);
-
   return (
     <ProductMainStyle>
       <ProductSectionStyle>
-        <ProductFormStyle id="product" onSubmit={handleImageSubmit}>
-          <ImageUpload
+        <ProductFormStyle id="product" onSubmit={handleFormSubmit}>
+          <ProductImageUpload
             title="이미지 등록"
-            onImageChange={handleImageChange}
-            value={image}
-            imagePreview={imagePreview || inputValue.itemImage}
+            onImageChange={handleInputChange}
+            imagePreview={imagePreview}
           />
           <RadioInputGroup title={'상품종류'}>
-            <RadioInput
-              id="film"
-              value="필름"
-              checked={itemType === '필름'}
-              onChange={(e) => setItemType(e.target.value)}
-            >
-              필름
-            </RadioInput>
-            <RadioInput
-              id="camera"
-              value="카메라"
-              checked={itemType === '카메라'}
-              onChange={(e) => setItemType(e.target.value)}
-            >
-              카메라
-            </RadioInput>
+            {ITEM_TYPE.map((item) => (
+              <RadioInput
+                key={item}
+                id={'itemType'}
+                value={item}
+                onChange={handleInputChange}
+                checked={item === itemType}
+              >
+                {item}
+              </RadioInput>
+            ))}
           </RadioInputGroup>
           <TextInput
-            id="productNameInput"
+            id="itemName"
             type="text"
             placeholder="2~15자 이내여야 합니다."
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={itemName}
+            onChange={handleInputChange}
           >
             상품명
           </TextInput>
           <TextInput
-            id="priceInput"
+            id="itemPrice"
             type="text"
             placeholder="숫자만 입력 가능합니다."
             value={displayPrice}
-            onChange={handlePriceChange}
+            onChange={handleInputChange}
           >
             가격
           </TextInput>
