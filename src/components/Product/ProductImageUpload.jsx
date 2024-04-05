@@ -44,17 +44,21 @@ const ImageInputStyle = styled.input`
   display: none;
 `;
 
-export default function ImageUpload({ title, onImageChange, imagePreview }) {
+export default function ProductImageUpload({
+  title,
+  onImageChange,
+  imagePreview,
+}) {
   return (
     <ImageContainerStyle>
       <ImageTitleStyle>{title}</ImageTitleStyle>
-      <ImageLabelStyle htmlFor="productImg" imagePreview={imagePreview}>
+      <ImageLabelStyle htmlFor="itemImage" imagePreview={imagePreview}>
         <ImageInputStyle
           type="file"
-          id="productImg"
+          id="itemImage"
+          name="itemImage"
           onChange={onImageChange}
           accept=".jpg,.jpeg,.png,.gif,.bmp,.tif,.heic"
-          name="image"
         />
       </ImageLabelStyle>
     </ImageContainerStyle>

@@ -2,43 +2,47 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Header } from 'layouts';
 import { ProductUpload } from 'components/Product';
-import { getProductAPI, editProductAPI } from 'api/apis';
+import { getProductAPI } from 'api/apis';
+import { getIsProductFormValid } from 'utils';
 
 export default function ProductEditPage() {
   const { product_id } = useParams();
   const [inputValue, setInputValue] = useState({
-    itemImage: '',
-    itemType: '',
+    itemImage: null,
+    itemType: '필름',
     itemName: '',
-    price: 0,
+    itemPrice: null,
   });
+  const { itemImage, itemName, itemPrice } = inputValue;
+
+  const btnDisabled = getIsProductFormValid(itemName, itemImage, itemPrice);
 
   useEffect(() => {
     const getData = async () => {
       const product = await getProductAPI(product_id);
-
+      const { itemImage, link, itemName, price } = product;
       setInputValue({
-        itemImage: product.itemImage,
-        itemType: product.link,
-        itemName: product.itemName,
-        price: product.price,
+        itemImage,
+        itemName,
+        itemType: link,
+        itemPrice: price,
       });
     };
     getData();
   }, []);
 
-  const handleEditSubmit = async (productData) => {
-    await editProductAPI(product_id, productData);
-  };
-
   return (
     <>
-      <Header type="upload" buttonId="product" buttonText="저장" />
+      <Header
+        type="upload"
+        buttonId="product"
+        buttonText="저장"
+        btnDisabled={btnDisabled}
+      />
       <ProductUpload
-        handleEditSubmit={handleEditSubmit}
+        isEditMode={true}
         inputValue={inputValue}
         setInputValue={setInputValue}
-        isEditMode={true}
       />
     </>
   );
